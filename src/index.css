@@ -452,6 +452,11 @@ body {
 @keyframes cart-tray-item-out { to { opacity: 0; transform: translate3d(20px, 0, 0) scale(.97); } }
 @media (prefers-reduced-motion: reduce) { .cart-tray-item, .cart-tray-item--leaving { animation: none; } }
 
+/* Pairing prices come from menu strings that already include a currency mark.
+   Render the numeric value once to avoid a duplicate rupee symbol. */
+.cart-pair-price { font-size: 0 !important; }
+.cart-pair-price::after { content: '\20B9' attr(data-price); font-size: 11px; }
+
 /* ── Performance Optimizations (60 FPS Butter-Smooth Scrolling) ── */
 html {
   scroll-behavior: smooth;

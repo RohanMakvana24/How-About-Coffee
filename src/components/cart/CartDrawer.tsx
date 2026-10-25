@@ -464,7 +464,7 @@ export const CartDrawer: React.FC = () => {
                             {addon.name}
                           </span>
                           <div className="mt-1 flex items-center justify-between">
-                            <span className="text-[11px] font-extrabold text-amber-600 dark:text-amber-400">
+                            <span data-price={price} className="cart-pair-price text-[11px] font-extrabold text-amber-600 dark:text-amber-400">
                               ₹{addon.price}
                             </span>
                             <button
