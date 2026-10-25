@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useCart, CartItem } from '../../context/CartContext';
 import { buildSrcSet } from '../../lib/imageSrcSet';
 import { useTheme } from '../../context/ThemeContext';
+import { MENU_ITEMS } from '../../data/menuData';
 import {
   X,
   Plus,
@@ -23,36 +24,7 @@ import {
   Info,
 } from 'lucide-react';
 
-// Recommended quick add-on favorites
-const COFFEE_ADDONS: Array<{
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-}> = [
-  {
-    id: 'addon-latte',
-    name: 'Cold Foam Latte',
-    price: 169,
-    category: 'Coffee',
-    image: '/images/photos/cold-coffee.webp',
-  },
-  {
-    id: 'addon-fries',
-    name: 'Peri Peri Crisp Fries',
-    price: 149,
-    category: 'Snacks',
-    image: '/images/photos/menu-peri-peri-fries.webp',
-  },
-  {
-    id: 'addon-brownie',
-    name: 'Sizzling Brownie & Gelato',
-    price: 219,
-    category: 'Desserts',
-    image: '/images/photos/menu-brownie-ice-cream.webp',
-  },
-];
+const PAIRING_PRIORITY = ['hazelnut-cappuccino', 'peri-peri-fries', 'brownie-ice-cream', 'cafe-latte'];
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -79,6 +51,21 @@ export const CartDrawer: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [copied, setCopied] = useState(false);
+  const [leavingIds, setLeavingIds] = useState<string[]>([]);
+  const pairings = useMemo(() => {
+    const preferred = PAIRING_PRIORITY.map((id) => MENU_ITEMS.find((item) => item.id === id)).filter(Boolean);
+    const available = preferred.filter((item) => !items.some((cartItem) => cartItem.id === item!.id));
+    return (available.length >= 3 ? available : preferred).slice(0, 3);
+  }, [items]);
+
+  const removeWithAnimation = (id: string) => {
+    if (leavingIds.includes(id)) return;
+    setLeavingIds((previous) => [...previous, id]);
+    window.setTimeout(() => {
+      removeItem(id);
+      setLeavingIds((previous) => previous.filter((currentId) => currentId !== id));
+    }, 220);
+  };
 
   // Close on ESC
   useEffect(() => {
@@ -112,7 +99,7 @@ export const CartDrawer: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden select-none">
+    <div className="fixed inset-0 z-[200] overflow-hidden select-none">
       {/* 1. Backdrop Overlay with Blur */}
       <div
         onClick={closeCart}
@@ -342,7 +329,7 @@ export const CartDrawer: React.FC = () => {
                     {items.map((item) => (
                       <div
                         key={item.id}
-                        className="p-3.5 rounded-2xl border flex items-center justify-between gap-3 transition-all"
+                        className={`cart-tray-item p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${leavingIds.includes(item.id) ? 'cart-tray-item--leaving' : ''}`}
                         style={{
                           backgroundColor: isDark ? 'rgba(255,255,255,0.025)' : '#FFFFFF',
                           borderColor: isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)',
@@ -405,7 +392,7 @@ export const CartDrawer: React.FC = () => {
                           >
                             <button
                               type="button"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              onClick={() => item.quantity === 1 ? removeWithAnimation(item.id) : updateQuantity(item.id, item.quantity - 1)}
                               aria-label="Decrease quantity"
                               className="w-5 h-5 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
                             >
@@ -426,7 +413,7 @@ export const CartDrawer: React.FC = () => {
 
                           <button
                             type="button"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeWithAnimation(item.id)}
                             aria-label={`Remove ${item.name}`}
                             className="w-7 h-7 flex items-center justify-center rounded-full text-zinc-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                           >
@@ -448,8 +435,9 @@ export const CartDrawer: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-3 gap-2">
-                    {COFFEE_ADDONS.map((addon) => {
-                      const isAlreadyInCart = items.some((i) => i.id === addon.id);
+                    {pairings.map((addon) => {
+                      if (!addon) return null;
+                      const price = Number((addon.price ?? '').replace(/\D/g, '')) || 0;
                       return (
                         <div
                           key={addon.id}
@@ -460,8 +448,8 @@ export const CartDrawer: React.FC = () => {
                           }}
                         >
                           <img
-                            src={addon.image}
-                            srcSet={buildSrcSet(addon.image)}
+                            src={addon.imageUrl}
+                            srcSet={buildSrcSet(addon.imageUrl)}
                             sizes="110px"
                             alt={addon.name}
                             loading="lazy"
@@ -485,9 +473,9 @@ export const CartDrawer: React.FC = () => {
                                 addItem({
                                   id: addon.id,
                                   name: addon.name,
-                                  price: addon.price,
-                                  category: addon.category,
-                                  imageUrl: addon.image,
+                                  price,
+                                  category: addon.categoryLabel,
+                                  imageUrl: addon.imageUrl,
                                 })
                               }
                               className="w-6 h-6 rounded-full flex items-center justify-center bg-amber-500 text-black hover:bg-amber-400 transition-all cursor-pointer font-bold"

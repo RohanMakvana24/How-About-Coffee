@@ -71,7 +71,7 @@ export const MenuSection: React.FC = () => {
                   className={`inline-flex w-full max-w-[260px] cursor-pointer items-center justify-center gap-2 rounded-full py-3 text-xs font-black transition-all ${added ? 'bg-emerald-600 text-white' : 'text-white hover:opacity-90'}`}
                   style={added ? undefined : { background: 'var(--color-brand-primary)' }}
                 >
-                  {added ? <><Check className="h-4 w-4" /> Added to tray</> : <><Plus className="h-4 w-4" /> Add to order</>}
+                  {added ? <><Check className="h-4 w-4" /> Added to cart</> : <><Plus className="h-4 w-4" /> Add to cart</>}
                 </button>
               );
             }}

@@ -51,7 +51,7 @@ export const FloatingCartBar: React.FC = () => {
             >
               Coffee Tray ({totalItems} {totalItems === 1 ? 'item' : 'items'})
             </span>
-            <span className="text-[11px] font-mono opacity-60">Tap to review &amp; order</span>
+            <span className="text-[11px] font-mono opacity-60">Tap to view cart &amp; order</span>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export const FloatingCartBar: React.FC = () => {
               backgroundColor: 'var(--color-brand-primary)',
             }}
           >
-            <span>Order</span>
+            <span>View cart</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </div>
         </div>

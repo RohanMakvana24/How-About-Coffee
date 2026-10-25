@@ -445,6 +445,13 @@ body {
 .review-marquee-window { width: calc(100% - 2rem); max-width: 1240px; margin-inline: auto; overflow: hidden; mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%); }
 @media (min-width: 640px) { .review-marquee-window { width: calc(100% - 3rem); } }
 
+/* Cart list entries animate in/out instead of disappearing abruptly. */
+.cart-tray-item { animation: cart-tray-item-in .24s cubic-bezier(.16, 1, .3, 1) both; }
+.cart-tray-item--leaving { pointer-events: none; animation: cart-tray-item-out .22s ease-in both; }
+@keyframes cart-tray-item-in { from { opacity: 0; transform: translate3d(0, 9px, 0) scale(.985); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+@keyframes cart-tray-item-out { to { opacity: 0; transform: translate3d(20px, 0, 0) scale(.97); } }
+@media (prefers-reduced-motion: reduce) { .cart-tray-item, .cart-tray-item--leaving { animation: none; } }
+
 /* ── Performance Optimizations (60 FPS Butter-Smooth Scrolling) ── */
 html {
   scroll-behavior: smooth;
