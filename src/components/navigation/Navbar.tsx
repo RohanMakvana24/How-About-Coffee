@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Menu, X, MapPin, Phone, ArrowUpRight } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 import { ThemeToggle } from '../common/ThemeToggle';
@@ -15,6 +16,8 @@ const NAV_ITEMS = [
 export const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [overHero, setOverHero] = useState(true);
+  const [pendingTarget, setPendingTarget] = useState<string | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -27,21 +30,46 @@ export const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    if (!open) return () => { document.body.style.overflow = ''; };
+    if (!open) return;
+    // Fixed-body locking works on iOS too and prevents the page beneath the
+    // drawer from moving while the menu itself remains independently scrollable.
+    const scrollY = window.scrollY;
+    const previous = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    };
+    Object.assign(document.body.style, { position: 'fixed', top: `-${scrollY}px`, width: '100%', overflow: 'hidden' });
+    window.setTimeout(() => closeButtonRef.current?.focus(), 0);
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setOpen(false);
     };
     window.addEventListener('keydown', closeOnEscape);
     return () => {
-      document.body.style.overflow = '';
+      Object.assign(document.body.style, previous);
+      window.scrollTo(0, scrollY);
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [open]);
 
+  useEffect(() => {
+    if (open || !pendingTarget) return;
+    // Wait for the body scroll-lock cleanup before trying to move the page.
+    const frame = window.requestAnimationFrame(() => {
+      document.querySelector(pendingTarget)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setPendingTarget(null);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [open, pendingTarget]);
+
   const goTo = (href: string) => {
-    setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    if (open) {
+      setPendingTarget(href);
+      setOpen(false);
+      return;
+    }
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const lightOnDark = overHero && !open;
@@ -101,10 +129,13 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {open && (
-        <div className="fixed inset-0 top-[76px] z-40 lg:hidden" style={{ background: 'var(--color-bg-page)' }}>
+      {open && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[200] lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation" style={{ background: 'var(--color-bg-page)' }}>
+          <div className="absolute inset-x-0 top-0 h-[76px] border-b" style={{ background: 'var(--color-nav-bg)', borderColor: 'var(--color-border-subtle)' }} aria-hidden="true" />
+          <div className="absolute inset-x-0 top-[76px] bottom-0 overflow-hidden">
           <nav className="relative flex h-full flex-col overflow-y-auto px-5 pb-7 pt-5" aria-label="Mobile navigation">
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={() => setOpen(false)}
               className="absolute right-5 top-4 z-10 inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border px-4 text-xs font-black shadow-sm"
@@ -137,8 +168,9 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
           </nav>
+          </div>
         </div>
-      )}
+      , document.body)}
     </header>
   );
 };
