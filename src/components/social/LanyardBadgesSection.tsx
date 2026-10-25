@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MultiBadgeItem } from '../ui/MultiLanyard';
 import { LazyMount } from '../common/LazyMount';
 
@@ -24,12 +24,30 @@ import {
 import { ExternalLink, Star, Instagram, ThumbsUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BUSINESS_INFO } from '../../data/businessInfo';
 
+/** Keeps the mobile review area purposeful while canvas textures/WebGL load. */
+const LanyardSkeleton: React.FC = () => (
+  <div className="lanyard-skeleton" role="status" aria-label="Loading guest review card">
+    <div className="lanyard-skeleton__strap" />
+    <div className="lanyard-skeleton__clip" />
+    <div className="lanyard-skeleton__card">
+      <span className="lanyard-skeleton__badge" />
+      <span className="lanyard-skeleton__line lanyard-skeleton__line--title" />
+      <span className="lanyard-skeleton__line" />
+      <span className="lanyard-skeleton__rating" />
+      <span className="lanyard-skeleton__line lanyard-skeleton__line--short" />
+      <span className="lanyard-skeleton__cta" />
+    </div>
+    <p>Brewing up guest stories</p>
+  </div>
+);
+
 export const LanyardBadgesSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [prepareBadges, setPrepareBadges] = useState(false);
+  const [badgeItems, setBadgeItems] = useState<MultiBadgeItem[]>([]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -54,11 +72,14 @@ export const LanyardBadgesSection: React.FC = () => {
     return () => observer.disconnect();
   }, [isMobile]);
 
-  const badgeItems = useMemo<MultiBadgeItem[]>(() => {
+  useEffect(() => {
     // Creating six 1536px canvases is expensive. Do it only when this section
-    // is about to enter the viewport, never during initial page load.
-    if (!prepareBadges) return [];
-    try {
+    // is about to enter the viewport, never during initial page load. Deferring
+    // one turn lets the loading skeleton paint before this CPU-heavy work starts.
+    if (!prepareBadges) return;
+    setBadgeItems([]);
+    const timer = window.setTimeout(() => {
+      try {
       const gFront = createGoogleFrontCanvas();
       const gBack = createGoogleBackCanvas();
       const gStrap = createStrapCanvas('google');
@@ -73,7 +94,7 @@ export const LanyardBadgesSection: React.FC = () => {
 
       const anchors = isMobile ? [1 / 6, 0.5, 5 / 6] : [0.22, 0.5, 0.78];
 
-      return [
+      setBadgeItems([
         {
           id: 'google',
           frontCanvas: gFront,
@@ -101,11 +122,12 @@ export const LanyardBadgesSection: React.FC = () => {
           metal: 'silver',
           anchor: anchors[2],
         },
-      ];
-    } catch (error) {
-      console.error('Error generating badge canvas textures:', error);
-      return [];
-    }
+      ]);
+      } catch (error) {
+        console.error('Error generating badge canvas textures:', error);
+      }
+    }, 32);
+    return () => window.clearTimeout(timer);
   }, [isMobile, prepareBadges]);
 
   const handleScroll = () => {
@@ -186,11 +208,11 @@ export const LanyardBadgesSection: React.FC = () => {
                 className="w-full h-full"
                 minHeight="540px"
                 rootMargin="0px"
-                placeholder={<div className="w-full h-full" aria-hidden="true" />}
+                placeholder={<LanyardSkeleton />}
               >
                 <MultiLanyard items={badgeItems} className="w-full h-full" breeze={0.35} interactive={true} />
               </LazyMount>
-            ) : null}
+            ) : <LanyardSkeleton />}
           </div>
 
           <div className="flex sm:grid sm:grid-cols-3 w-full mt-4 sm:mt-5 relative z-20">

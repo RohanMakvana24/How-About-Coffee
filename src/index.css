@@ -494,6 +494,18 @@ footer {
 @keyframes footer-vignette-float { from { transform: translate3d(0, -7px, 0) rotate(-2deg); } to { transform: translate3d(0, 9px, 0) rotate(2deg); } }
 @media (prefers-reduced-motion: reduce) { .footer-3d-vignette { animation: none; } }
 
+/* Review lanyard loading state: mirrors the hanging badge footprint instead
+   of leaving a large mobile gap while its canvas textures are prepared. */
+.lanyard-skeleton { position: relative; display: grid; min-height: 100%; place-items: center; overflow: hidden; background: radial-gradient(circle at 50% 30%, rgba(245,177,78,.17), transparent 31%), linear-gradient(145deg, #fffaf1, #f3e7d3); isolation: isolate; }
+.lanyard-skeleton::before { content: ''; position: absolute; inset: -45% -35%; background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.8) 50%, transparent 58%); animation: lanyard-skeleton-shine 1.6s linear infinite; }
+.lanyard-skeleton__strap { position: absolute; top: 0; width: 38px; height: 42%; border-inline: 2px solid rgba(186,135,60,.55); background: repeating-linear-gradient(90deg, #152638 0 3px, #e4c17e 3px 5px, #152638 5px 8px); border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(60,34,17,.14); }
+.lanyard-skeleton__clip { position: absolute; top: calc(42% - 10px); z-index: 1; width: 44px; height: 28px; border: 2px solid #a57227; border-radius: 7px; background: linear-gradient(135deg, #f6d37b, #ae761e); box-shadow: 0 4px 10px rgba(65,35,8,.18); }
+.lanyard-skeleton__card { position: absolute; top: 47%; display: flex; width: min(70%, 285px); height: 43%; flex-direction: column; align-items: center; gap: 10px; border: 3px solid #d6a93e; border-radius: 24px; background: linear-gradient(145deg, #10273e, #071522); box-shadow: 0 16px 34px rgba(33,20,9,.26); padding: 28px 25px; }
+.lanyard-skeleton__badge, .lanyard-skeleton__line, .lanyard-skeleton__rating, .lanyard-skeleton__cta { display: block; border-radius: 999px; background: rgba(255,255,255,.18); }
+.lanyard-skeleton__badge { width: 34px; height: 34px; border: 3px solid rgba(255,199,68,.75); background: rgba(255,255,255,.9); }.lanyard-skeleton__line { width: 72%; height: 8px; }.lanyard-skeleton__line--title { width: 52%; height: 11px; }.lanyard-skeleton__line--short { width: 45%; }.lanyard-skeleton__rating { width: 70%; height: 45px; border: 2px solid rgba(247,180,57,.8); background: rgba(0,0,0,.13); }.lanyard-skeleton__cta { margin-top: auto; width: 82%; height: 26px; background: #f6a94c; }.lanyard-skeleton p { position: absolute; bottom: 16px; z-index: 2; margin: 0; color: #815126; font-size: 9px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+@keyframes lanyard-skeleton-shine { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
+@media (prefers-reduced-motion: reduce) { .lanyard-skeleton::before { animation: none; } }
+
 /* How About Coffee — Phase 1 brand palette */
 :root {
   --color-brand-primary: #4A2416;
