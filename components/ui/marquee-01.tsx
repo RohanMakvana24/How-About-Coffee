@@ -47,8 +47,6 @@ export function MarqueeDemo() {
         <Marquee pauseOnHover repeat={2} className="[--duration:38s]">
           {secondRow.map((review) => <ReviewCard key={review.name} {...review} />)}
         </Marquee>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r sm:w-16" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l sm:w-16" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
       </div>
     </div>
   );
