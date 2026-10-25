@@ -27,27 +27,27 @@ export const BADGE_THEMES: Record<string, BadgeThemeConfig> = {
     badgeTag: 'VERIFIED GOOGLE DINER',
     ratingText: '4.9',
     subRating: '2,480+ Verified Reviews on Google',
-    handle: 'FOOGLE CAFE & RESTO',
-    quote: '"Best woodfired pizza & specialty coffee in Udaipur. Cozy courtyard atmosphere with 5-star hospitality!"',
+    handle: 'HOW ABOUT COFFEE',
+    quote: '"Great coffee, cozy vibe, and a relaxed Jaipur café stop for conversations and snacks."',
     author: '— Aarav Sharma · Local Guide (Level 7)',
     btnText: 'READ GOOGLE REVIEWS ↗',
-    bandText: '✦ FOOGLE CAFE · 4.9★ GOOGLE RATED · PANCHWATI, UDAIPUR ✦',
+    bandText: '✦ HOW ABOUT COFFEE · 4.9★ GOOGLE RATED · JAGATPURA, JAIPUR ✦',
     bandBg: '#132338',
   },
   instagram: {
     id: 'instagram',
     name: 'Instagram Feed',
-    tagline: '@fooglecafe · 18.5K Followers',
+    tagline: '@howaboutcoffee · 18.5K Followers',
     primaryColor: '#E1306C',
     accentColor: '#FD1D1D',
-    badgeTag: 'TRENDING COURTYARD REELS',
+    badgeTag: 'TRENDING CAFE REELS',
     ratingText: '18.5K',
-    subRating: 'Followers · 420 Posts · Udaipur',
-    handle: '@fooglecafe · Udaipur',
-    quote: '"Golden hour in the sun-drenched courtyard with sourdough margherita and iced espresso tonic."',
+    subRating: 'Followers · 420 Posts · Jaipur',
+    handle: '@howaboutcoffee · Jaipur',
+    quote: '"Golden hour coffee run at How About Coffee with fresh sandwiches, thick shakes, and a warm café mood."',
     author: '— Priya Mehra · Food & Travel Creator',
     btnText: 'FOLLOW ON INSTAGRAM ↗',
-    bandText: '✦ @FOOGLECAFE · COURTYARD REELS & STORIES · UDAIPUR ✦',
+    bandText: '✦ @HOWABOUTCOFFEE · CAFE REELS & STORIES · JAIPUR ✦',
     bandBg: '#3b1228',
   },
   facebook: {
@@ -59,27 +59,27 @@ export const BADGE_THEMES: Record<string, BadgeThemeConfig> = {
     badgeTag: 'COMMUNITY RECOMMENDATION',
     ratingText: '99%',
     subRating: 'Recommended by 1,400+ Guests',
-    handle: 'Foogle Cafe Udaipur',
-    quote: '"Hosted our family anniversary dinner in the courtyard garden. Warm hospitality and phenomenal pizzas!"',
+    handle: 'How About Coffee Jaipur',
+    quote: '"Nice café spot in Jagatpura for coffee, snacks, and relaxed evenings with friends."',
     author: '— Vikram & Meera R. · Verified Diners',
     btnText: 'VISIT FACEBOOK PAGE ↗',
-    bandText: '✦ FOOGLE CAFE UDAIPUR · 99% RECOMMENDED COMMUNITY ✦',
+    bandText: '✦ HOW ABOUT COFFEE JAIPUR · 99% RECOMMENDED COMMUNITY ✦',
     bandBg: '#0f294a',
   },
   twitter: {
     id: 'twitter',
     name: 'X (Twitter)',
-    tagline: '@foogle_udaipur · Live Crust Talk',
+    tagline: '@howaboutcoffee · Live Café Talk',
     primaryColor: '#0F172A',
     accentColor: '#0EA5E9',
-    badgeTag: 'LIVE PASS BROADCAST',
+    badgeTag: 'LIVE COFFEE BROADCAST',
     ratingText: '450°C',
-    subRating: 'Stone Oven Fired · 340+ Live Updates',
-    handle: '@foogle_udaipur · Live',
-    quote: '"450°C stone oven fired up early today. 48-hr slow fermented sourdough batches ready for service!"',
-    author: '— Chef Pass · Head Pizzaiolo',
+    subRating: 'Fresh Brews · 340+ Live Updates',
+    handle: '@howaboutcoffee · Live',
+    quote: '"Fresh brews, cozy corners, and a lively Jaipur café vibe all day long."',
+    author: '— Café Updates · How About Coffee',
     btnText: 'FOLLOW ON X ↗',
-    bandText: '✦ @FOOGLE_UDAIPUR · 450°C STONE OVEN LIVE PASS ✦',
+    bandText: '✦ @HOWABOUTCOFFEE · LIVE COFFEE UPDATES ✦',
     bandBg: '#1e293b',
   },
 };
@@ -299,7 +299,7 @@ export function createCleanBadgeCanvasTexture(configId: string): THREE.CanvasTex
 
   ctx.font = 'bold 12px system-ui, sans-serif';
   ctx.fillStyle = '#059669';
-  ctx.fillText('📍 Panchwati, Udaipur · Rajasthan', fx + 32, brandY + 22);
+  ctx.fillText('📍 Jagatpura, Jaipur · Rajasthan', fx + 32, brandY + 22);
 
   // Review Quote Box (Clean warm inset)
   const quoteY = brandY + 44;
@@ -322,12 +322,12 @@ export function createCleanBadgeCanvasTexture(configId: string): THREE.CanvasTex
   
   if (theme.id === 'google') {
     ctx.fillText('Best woodfired pizza & pour-over coffee', fx + 44, quoteY + 60);
-    ctx.fillText('in Udaipur. Cozy courtyard atmosphere with', fx + 44, quoteY + 84);
+    ctx.fillText('in Jaipur. Cozy cafe atmosphere with', fx + 44, quoteY + 84);
     ctx.fillText('warm, unhurried 5-star hospitality!', fx + 44, quoteY + 108);
   } else if (theme.id === 'instagram') {
-    ctx.fillText('Golden hour in the sun-drenched courtyard', fx + 44, quoteY + 60);
-    ctx.fillText('with sourdough margherita and iced latte.', fx + 44, quoteY + 84);
-    ctx.fillText('Udaipur’s coziest cafe aesthetic!', fx + 44, quoteY + 108);
+    ctx.fillText('Golden hour in the sun-drenched cafe', fx + 44, quoteY + 60);
+    ctx.fillText('with grilled sandwich and iced latte.', fx + 44, quoteY + 84);
+    ctx.fillText('Jaipur’s coziest cafe aesthetic!', fx + 44, quoteY + 108);
   } else if (theme.id === 'facebook') {
     ctx.fillText('Hosted our family dinner in the courtyard.', fx + 44, quoteY + 60);
     ctx.fillText('Warm hospitality, live weekend music, and', fx + 44, quoteY + 84);
@@ -418,18 +418,18 @@ export function createCleanBadgeCanvasTexture(configId: string): THREE.CanvasTex
 
   ctx.font = 'bold 14px monospace';
   ctx.fillStyle = theme.primaryColor;
-  ctx.fillText(theme.id === 'google' ? 'g.page/foogle-cafe-udaipur' : 'instagram.com/fooglecafe', bx + bw / 2, linkY + 26);
+  ctx.fillText(theme.id === 'google' ? 'howaboutcoffee.in' : 'instagram.com/howaboutcoffee', bx + bw / 2, linkY + 26);
 
   // Information footer
   const infoY = linkY + 76;
   ctx.font = 'bold 13px system-ui, sans-serif';
   ctx.fillStyle = '#111827';
-  ctx.fillText('Foogle Cafe · Panchwati, Udaipur', bx + bw / 2, infoY);
+  ctx.fillText('How About Coffee · Jagatpura, Jaipur', bx + bw / 2, infoY);
 
   ctx.font = '12px system-ui, sans-serif';
   ctx.fillStyle = '#6B7280';
-  ctx.fillText('Opposite Big Bazaar · Rajasthan 313001', bx + bw / 2, infoY + 22);
-  ctx.fillText('Open Daily: 10:00 AM – 11:00 PM', bx + bw / 2, infoY + 44);
+  ctx.fillText('Aryaveer Nagar, Jagatpura Road · Rajasthan 302017', bx + bw / 2, infoY + 22);
+  ctx.fillText('Open Daily: 9:00 AM – 11:59 PM', bx + bw / 2, infoY + 44);
 
   // Bottom Award ribbon
   const awardY = infoY + 80;
@@ -442,7 +442,7 @@ export function createCleanBadgeCanvasTexture(configId: string): THREE.CanvasTex
 
   ctx.font = 'bold 12px system-ui, sans-serif';
   ctx.fillStyle = '#B45309';
-  ctx.fillText('★  UDAIPUR’S TOP RATED CAFE 2026  ★', bx + bw / 2, awardY + 26);
+  ctx.fillText('★  JAIPUR’S TOP RATED CAFE 2026  ★', bx + bw / 2, awardY + 26);
 
   // Create & configure Three.js CanvasTexture
   const texture = new THREE.CanvasTexture(canvas);

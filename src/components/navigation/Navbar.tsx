@@ -1,398 +1,146 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Menu, X, MapPin, Phone, ArrowUpRight } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 import { ThemeToggle } from '../common/ThemeToggle';
-import { Button } from '../common/Button';
-import StarBorder from '@/components/ui/StarBorder';
-import { Container } from '../common/Container';
-import { Menu as MenuIcon, X, ArrowUpRight, MapPin, Clock, Phone, ShoppingBag } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { BUSINESS_INFO } from '../../data/businessInfo';
 
-
-export interface NavItem {
-  id: string;
-  label: string;
-  href: string;
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { id: 'home', label: 'Home', href: '#home' },
-  { id: 'menu', label: 'Menu', href: '#menu' },
-  { id: 'story', label: 'Our Story', href: '#story' },
-  { id: 'gallery', label: 'Gallery', href: '#gallery' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
+const NAV_ITEMS = [
+  { label: 'Home', href: '#home' },
+  { label: 'Menu', href: '#menu' },
+  { label: 'Our Story', href: '#story' },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Visit Us', href: '#contact' },
 ];
 
 export const Navbar: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const { totalItems, openCart } = useCart();
+  const [open, setOpen] = useState(false);
+  const [overHero, setOverHero] = useState(true);
 
-  // Detect scroll state for subtle elevation
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const hero = document.querySelector('#home');
+      setOverHero(Boolean(hero && hero.getBoundingClientRect().bottom > 76));
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Active section scroll spy using IntersectionObserver
   useEffect(() => {
-    const sectionIds = ['home', 'menu', 'story', 'gallery', 'contact'];
-    const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (!element) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          });
-        },
-        {
-          rootMargin: '-20% 0px -60% 0px',
-          threshold: 0,
-        }
-      );
-
-      observer.observe(element);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (!open) return () => { document.body.style.overflow = ''; };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
     };
-  }, []);
-
-  // Close mobile drawer on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
-  // Lock body scroll while mobile drawer is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    window.addEventListener('keydown', closeOnEscape);
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', closeOnEscape);
     };
-  }, [mobileMenuOpen]);
+  }, [open]);
 
-  const handleNavClick = (href: string) => {
-    setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const goTo = (href: string) => {
+    setOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const lightOnDark = overHero && !open;
+
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200 border-b backdrop-blur-md ${
-          isScrolled ? 'shadow-md' : 'shadow-xs'
-        }`}
-        style={{
-          backgroundColor: 'var(--color-nav-bg)',
-          borderColor: isScrolled ? 'var(--color-border)' : 'var(--color-border-subtle)',
-        }}
-      >
-        <Container>
-          <div className="flex items-center justify-between h-18 gap-4 lg:gap-8">
-            {/* Zone 1: Wordmark */}
-            <a
-              href="#home"
-              className="flex items-center shrink-0 focus-visible:outline-2 rounded-lg"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('#home');
-              }}
+    <header
+      className={`pointer-events-auto sticky inset-x-0 top-0 z-[100] border-b transition-[background-color,border-color,box-shadow,color] duration-500 ${lightOnDark ? '' : 'shadow-[0_10px_35px_rgba(55,25,12,.08)]'}`}
+      style={{ backgroundColor: lightOnDark ? '#0e0805' : 'var(--color-nav-bg)', borderColor: lightOnDark ? 'transparent' : 'var(--color-border-subtle)', backdropFilter: lightOnDark ? 'none' : 'blur(18px)' }}
+    >
+      <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <button onClick={() => goTo('#home')} className="cursor-pointer rounded-xl text-left" aria-label="Go to homepage">
+          <BrandLogo size="md" inverse={lightOnDark} />
+        </button>
+
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.href}
+              onClick={() => goTo(item.href)}
+              className="cursor-pointer text-[13px] font-bold tracking-wide transition-colors hover:text-[var(--color-brand-accent)]"
+              style={{ color: lightOnDark ? 'rgba(255,247,236,.82)' : 'var(--color-text-secondary)' }}
             >
-              <BrandLogo size="md" />
-            </a>
+              {item.label}
+            </button>
+          ))}
+        </nav>
 
-            {/* Zone 2: Desktop Navigation Links (Clean, unboxed typography with active state indicator) */}
-            <nav
-              aria-label="Primary navigation"
-              className="hidden md:flex items-center gap-7 text-sm font-medium"
-            >
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
-
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
-                    className={`relative py-1.5 transition-colors whitespace-nowrap focus-visible:outline-2 rounded ${
-                      isActive
-                        ? 'font-bold'
-                        : 'hover:text-[var(--color-brand-primary)]'
-                    }`}
-                    style={{
-                      color: isActive
-                        ? 'var(--color-brand-primary)'
-                        : 'var(--color-text-secondary)',
-                    }}
-                  >
-                    <span>{item.label}</span>
-                    {isActive && (
-                      <span
-                        className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all"
-                        style={{ backgroundColor: 'var(--color-brand-primary)' }}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </a>
-                );
-              })}
-            </nav>
-
-            {/* Zone 3: Actions (Theme Toggle + Tray Cart + Explore Menu CTA) */}
-            {/* Zone 3: Actions (Theme Toggle + Tray Cart + Explore Menu CTA) */}
-            <div className="hidden md:flex items-center gap-2 shrink-0">
-              {/* 1. Theme Toggle (Clean borderless) */}
-              <ThemeToggle showLabel={false} className="w-10 h-10 border-0 border-none shadow-none bg-transparent" />
-
-              {/* 2. Food Tray / Cart Button (Clean borderless) */}
-              <button
-                type="button"
-                onClick={openCart}
-                aria-label="Open food tray cart"
-                className={`relative inline-flex items-center gap-2 px-3.5 h-10 rounded-xl border-0 border-none text-xs font-bold transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-none ${
-                  totalItems > 0
-                    ? 'bg-amber-500/15 hover:bg-amber-500/25 text-[var(--color-text-primary)]'
-                    : 'bg-transparent hover:bg-neutral-500/10 dark:hover:bg-neutral-400/10 text-[var(--color-text-primary)]'
-                }`}
-              >
-                <ShoppingBag className="w-4 h-4 text-amber-500" />
-                <span>Tray</span>
-                {totalItems > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black leading-none shadow-xs">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-
-              <StarBorder
-                as="button"
-                color="#ffffff"
-                trailColor="#ffffff"
-                duration={4}
-                direction="clockwise"
-                stars={1}
-                trailLength={0.3}
-                thickness={1}
-                radius={9999}
-                glow={0.6}
-                hover="lap"
-                sparkle={false}
-                clickPulse
-                theme="dark"
-                backgroundColor="var(--color-btn-primary-bg)"
-                textColor="var(--color-btn-primary-text)"
-                onClick={() => handleNavClick('#menu')}
-                className="px-5 py-2.5 text-xs font-semibold cursor-pointer shadow-sm rounded-full ml-1"
-              >
-                <span>Explore Menu</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </StarBorder>
-            </div>
-
-            {/* Mobile Right Bar: Mobile Cart + Mobile Theme Toggle + Hamburger Toggle */}
-            <div className="flex items-center gap-1.5 md:hidden">
-              {/* 1. Mobile Tray Cart Button (Clean borderless) */}
-              <button
-                type="button"
-                onClick={openCart}
-                aria-label="Open food tray cart"
-                className={`relative inline-flex items-center justify-center w-11 h-11 rounded-xl border-0 border-none transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-none ${
-                  totalItems > 0
-                    ? 'bg-amber-500/15 hover:bg-amber-500/25 text-[var(--color-text-primary)]'
-                    : 'bg-transparent hover:bg-neutral-500/10 dark:hover:bg-neutral-400/10 text-[var(--color-text-primary)]'
-                }`}
-              >
-                <ShoppingBag className="w-5 h-5 text-amber-500" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-amber-500 text-black text-[10px] font-black flex items-center justify-center shadow-md animate-in zoom-in-75 z-10">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-
-              {/* 2. Mobile Theme Toggle (Clean borderless) */}
-              <ThemeToggle showLabel={false} className="w-11 h-11 border-0 border-none shadow-none bg-transparent" />
-
-              {/* 3. Mobile Hamburger Toggle */}
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                aria-expanded={mobileMenuOpen}
-                aria-controls="mobile-navigation-drawer"
-                className="inline-flex items-center justify-center w-11 h-11 rounded-xl border-0 border-none bg-transparent hover:bg-neutral-500/10 dark:hover:bg-neutral-400/10 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-none focus-visible:outline-2"
-                style={{
-                  color: 'var(--color-text-primary)',
-                }}
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </Container>
-      </header>
-
-      {/* Mobile Navigation Drawer & Backdrop (Rendered as SIBLING of header so not constrained by backdrop-filter) */}
-      {mobileMenuOpen && (
-        <>
-          {/* Backdrop Dim Overlay */}
-          <div
-            className="fixed inset-0 top-[72px] bg-black/60 z-40 md:hidden transition-opacity duration-200"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-
-          {/* Solid Opaque Drawer Panel */}
-          <div
-            id="mobile-navigation-drawer"
-            className="fixed inset-x-0 top-[72px] bottom-0 z-50 md:hidden flex flex-col justify-between p-5 sm:p-6 overflow-y-auto border-t shadow-2xl transition-all duration-200 bg-[#FAF8F5] dark:bg-[#0E1411]"
-            style={{
-              backgroundColor: 'var(--color-bg-page)',
-              borderColor: 'var(--color-border)',
-            }}
+        <div className="hidden items-center gap-2 lg:flex">
+          <ThemeToggle showLabel={false} className={`h-10 w-10 border-0 shadow-none ${lightOnDark ? '!bg-white/10 text-white' : 'bg-transparent'}`} />
+          <a
+            href={BUSINESS_INFO.contact.phoneCallHref}
+            className="inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-bold transition-transform hover:-translate-y-0.5"
+            style={{ background: lightOnDark ? 'rgba(255,255,255,.1)' : 'var(--color-brand-surface-tint)', color: lightOnDark ? '#fff7ec' : 'var(--color-brand-primary)' }}
           >
-            {/* Mobile Nav Links */}
-            <div className="flex flex-col gap-2.5 pt-1">
-              <div className="flex items-center justify-between mb-1 px-1">
-                <span
-                  className="text-[11px] font-bold uppercase tracking-widest"
-                  style={{ color: 'var(--color-brand-primary)' }}
-                >
-                  Navigation
-                </span>
-                <span className="text-[11px] text-zinc-400 font-medium">Foogle Cafe · Udaipur</span>
+            <Phone className="h-3.5 w-3.5" /> Call Us
+          </a>
+          <button
+            onClick={() => goTo('#menu')}
+            className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full px-5 text-xs font-bold text-white shadow-lg transition-all hover:-translate-y-0.5"
+            style={{ background: 'var(--color-btn-primary-bg)' }}
+          >
+            Explore Menu <ArrowUpRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1 lg:hidden">
+          <ThemeToggle showLabel={false} className={`h-10 w-10 border-0 shadow-none ${lightOnDark ? '!bg-white/10 text-white' : 'bg-transparent'}`} />
+          <button
+            onClick={() => setOpen(!open)}
+            className="grid h-11 w-11 cursor-pointer place-items-center rounded-xl"
+            style={{ background: lightOnDark ? 'rgba(255,255,255,.1)' : 'var(--color-brand-surface-tint)', color: lightOnDark ? '#fff7ec' : 'var(--color-brand-primary)' }}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="fixed inset-0 top-[76px] z-40 lg:hidden" style={{ background: 'var(--color-bg-page)' }}>
+          <nav className="relative flex h-full flex-col overflow-y-auto px-5 pb-7 pt-5" aria-label="Mobile navigation">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="absolute right-5 top-4 z-10 inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border px-4 text-xs font-black shadow-sm"
+              style={{ background: 'var(--color-bg-surface)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
+              aria-label="Close navigation menu"
+            >
+              <X className="h-4 w-4" /> Close
+            </button>
+            <div className="h-10 shrink-0" aria-hidden="true" />
+            <p className="mb-3 text-[10px] font-black uppercase tracking-[.25em]" style={{ color: 'var(--color-brand-accent)' }}>Discover the café</p>
+            {NAV_ITEMS.map((item, index) => (
+              <button
+                key={item.href}
+                onClick={() => goTo(item.href)}
+                className="flex cursor-pointer items-center justify-between border-b py-4 text-left text-xl font-extrabold"
+                style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}
+              >
+                <span><small className="mr-3 text-[10px] opacity-40">0{index + 1}</small>{item.label}</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </button>
+            ))}
+            <div className="mt-auto space-y-3 rounded-3xl p-5" style={{ background: 'var(--color-brand-surface-tint)' }}>
+              <div className="flex items-start gap-3 text-sm font-semibold" style={{ color: 'var(--color-text-secondary)' }}>
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0" style={{ color: 'var(--color-brand-accent)' }} />
+                {BUSINESS_INFO.location.shortAddress}
               </div>
-
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
-
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
-                    className={`flex items-center justify-between py-3.5 px-4 rounded-xl text-base font-semibold border transition-all active:scale-[0.99] focus-visible:outline-2 shadow-2xs ${
-                      isActive ? 'ring-1' : ''
-                    }`}
-                    style={{
-                      backgroundColor: isActive
-                        ? 'var(--color-brand-surface-tint)'
-                        : 'var(--color-bg-surface)',
-                      borderColor: isActive
-                        ? 'var(--color-brand-primary)'
-                        : 'var(--color-border-subtle)',
-                      color: isActive
-                        ? 'var(--color-brand-primary)'
-                        : 'var(--color-text-primary)',
-                    }}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <span
-                        className={`w-2 h-2 rounded-full transition-transform ${
-                          isActive ? 'bg-amber-500 scale-125' : 'bg-zinc-300 dark:bg-zinc-600'
-                        }`}
-                      />
-                      {item.label}
-                    </span>
-                    <ArrowUpRight
-                      className={`w-4 h-4 transition-transform ${
-                        isActive ? 'text-amber-600 dark:text-amber-400 scale-110' : 'opacity-40'
-                      }`}
-                    />
-                  </a>
-                );
-              })}
-            </div>
-
-            {/* Mobile Bottom Action Strip */}
-            <div className="pt-5 mt-4 border-t space-y-4 pb-8" style={{ borderColor: 'var(--color-border)' }}>
-              <StarBorder
-                as="button"
-                color="#ffffff"
-                trailColor="#ffffff"
-                duration={4}
-                direction="clockwise"
-                stars={1}
-                trailLength={0.3}
-                thickness={1}
-                radius={12}
-                glow={0.6}
-                hover="lap"
-                sparkle={false}
-                clickPulse
-                theme="dark"
-                backgroundColor="var(--color-btn-primary-bg)"
-                textColor="var(--color-btn-primary-text)"
-                onClick={() => handleNavClick('#menu')}
-                className="w-full py-3.5 text-sm font-semibold cursor-pointer shadow-sm"
-              >
-                <span>Explore Full Menu</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </StarBorder>
-
-              {/* Quick Info & Direct Contact Card */}
-              <div
-                className="p-3.5 rounded-xl border flex flex-col gap-2.5 text-xs shadow-2xs"
-                style={{
-                  backgroundColor: 'var(--color-bg-surface)',
-                  borderColor: 'var(--color-border-subtle)',
-                  color: 'var(--color-text-secondary)',
-                }}
-              >
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                  <span className="leading-snug">Panchwati, Udaipur, Rajasthan 313001</span>
-                </div>
-                <div className="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                    <span>Open Daily: 10 AM – 11 PM</span>
-                  </div>
-                  <a
-                    href="tel:+919414162725"
-                    className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-semibold px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors"
-                  >
-                    <Phone className="w-3 h-3" />
-                    <span>Call Now</span>
-                  </a>
-                </div>
+              <div className="grid grid-cols-2 gap-2">
+                <a href={BUSINESS_INFO.contact.phoneCallHref} className="rounded-xl border py-3 text-center text-xs font-black" style={{ borderColor: 'var(--color-brand-primary)', color: 'var(--color-brand-primary)' }}>Call Café</a>
+                <a href={BUSINESS_INFO.contact.whatsappHref} target="_blank" rel="noreferrer" className="rounded-xl py-3 text-center text-xs font-black text-white" style={{ background: 'var(--color-brand-primary)' }}>WhatsApp</a>
               </div>
             </div>
-          </div>
-        </>
+          </nav>
+        </div>
       )}
-    </>
+    </header>
   );
 };
+
+export default Navbar;

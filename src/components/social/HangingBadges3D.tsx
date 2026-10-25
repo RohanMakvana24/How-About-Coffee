@@ -366,7 +366,7 @@ export const BADGE_CONFIGS: BadgeCardConfig[] = [
   {
     id: 'instagram',
     name: 'Instagram Feed',
-    tagline: '@fooglecafe · 18.5K Followers',
+    tagline: '@howaboutcoffee · 18.5K Followers',
     badgeTexture: '/textures/instagram_badge.jpg',
     bandTexture: '/textures/instagram_band.jpg',
     x: -1.3,
@@ -384,7 +384,7 @@ export const BADGE_CONFIGS: BadgeCardConfig[] = [
   {
     id: 'twitter',
     name: 'X (Twitter)',
-    tagline: '@foogle_udaipur · Live Crust Talk',
+    tagline: '@howaboutcoffee · Live Crust Talk',
     badgeTexture: '/textures/twitter_badge.jpg',
     bandTexture: '/textures/twitter_band.jpg',
     x: 3.9,
@@ -401,6 +401,7 @@ interface HangingBadges3DProps {
 export function HangingBadges3D({ activeId, onSelect, isDark = true }: HangingBadges3DProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(true);
+  const [lowPower, setLowPower] = useState(false);
 
   // Only render the 3D scene while the section is on screen (huge mobile win).
   useEffect(() => {
@@ -428,6 +429,14 @@ export function HangingBadges3D({ activeId, onSelect, isDark = true }: HangingBa
     };
   }, []);
 
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 640px)');
+    const sync = () => setLowPower(media.matches || (navigator.hardwareConcurrency ?? 4) <= 4);
+    sync();
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
+
   return (
     <div ref={wrapRef} className="w-full h-[760px] sm:h-[820px] relative select-none">
       <Suspense
@@ -440,7 +449,7 @@ export function HangingBadges3D({ activeId, onSelect, isDark = true }: HangingBa
       >
         <Canvas
           frameloop={isActive ? 'always' : 'never'}
-          dpr={[1, 1.5]}
+          dpr={lowPower ? [1, 1] : [1, 1.5]}
           camera={{ position: [0, 1.8, 12.0], fov: 43 }}
           gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
           style={{ background: 'transparent' }}

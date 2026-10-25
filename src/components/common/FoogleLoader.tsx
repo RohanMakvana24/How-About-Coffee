@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import { FoodDoodleLogo } from './FoodDoodleLogo';
 
-interface FoogleLoaderProps {
+interface HowAboutCoffeeLoaderProps {
   onComplete?: () => void;
   minDuration?: number;
 }
 
 const TAGLINES = [
   'Contemporary Cafe & Artisan Dining',
-  'Crafting Flavourful Moments in Udaipur',
+  'Crafting Flavourful Moments in Jaipur',
   'Curated Coffee, Bites & Relaxed Vibe',
-  'Welcome to Foogle',
+  'Welcome to How About Coffee',
 ];
 
-export const FoogleLoader: React.FC<FoogleLoaderProps> = ({
+export const HowAboutCoffeeLoader: React.FC<HowAboutCoffeeLoaderProps> = ({
   onComplete,
   minDuration = 2200,
 }) => {
@@ -70,7 +70,7 @@ export const FoogleLoader: React.FC<FoogleLoaderProps> = ({
   return (
     <div
       role="dialog"
-      aria-label="Loading Foogle"
+      aria-label="Loading How About Coffee"
       aria-modal="true"
       className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-all duration-700 ease-out select-none ${
         isFadingOut ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100'
@@ -118,7 +118,7 @@ export const FoogleLoader: React.FC<FoogleLoaderProps> = ({
             />
           </div>
           <div className="w-full flex items-center justify-between text-[11px] font-mono text-zinc-400">
-            <span>UDAIPUR</span>
+            <span>JAIPUR</span>
             <span className="text-amber-400 font-semibold">{progress}%</span>
           </div>
         </div>
@@ -170,3 +170,6 @@ export const FoogleLoader: React.FC<FoogleLoaderProps> = ({
     </div>
   );
 };
+
+// Backwards-compatible template export while legacy imports are phased out.
+export const FoogleLoader = HowAboutCoffeeLoader;

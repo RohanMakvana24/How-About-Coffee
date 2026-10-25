@@ -1,4 +1,4 @@
-/**  * RotatingLocationMap — 3D street/satellite map of Foogle Cafe in Panchwati, Udaipur.
+/**  * RotatingLocationMap — 3D street/satellite map of How About Coffee in Jagatpura, Jaipur.
  * The view is static (no auto-rotation); visitors can drag, zoom and switch layers.
  * Powered by MapLibre GL with high-speed, zero-downtime OpenStreetMap & ESRI Satellite tile layers.
  */
@@ -15,10 +15,12 @@ import {
   Compass,
   Layers,
 } from 'lucide-react';
-import { FOOGLE_BUSINESS_INFO } from '../../data/businessInfo';
+import { BUSINESS_INFO } from '../../data/businessInfo';
 
-// Confirmed geographic coordinates of Foogle in Panchwati, Udaipur, Rajasthan (north of Panchwati Chowk, south of canal)
-const FOOGLE_COORDINATES: [number, number] = [73.68938, 24.59838];
+const BUSINESS_COORDINATES: [number, number] = [
+  BUSINESS_INFO.location.coordinates.longitude,
+  BUSINESS_INFO.location.coordinates.latitude,
+];
 
 // maplibre-gl v6 ships its worker as a sibling ES module that the bundler does
 // not emit, so point it at the copy served from /public (kept version-matched).
@@ -90,18 +92,39 @@ export const RotatingLocationMap: React.FC = () => {
   // Create custom marker helper with bottom tip anchor directly on coordinates
   const createMarkerElement = useCallback(() => {
     const el = document.createElement('div');
-    el.className = 'foogle-custom-map-marker';
+    el.className = 'hac-custom-map-marker';
     el.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; user-select: none;">
         <!-- Top Branded Floating Badge -->
         <div style="margin-bottom: 5px; padding: 4px 11px; background: rgba(24, 59, 43, 0.95); border: 1.5px solid rgba(245, 158, 11, 0.85); border-radius: 9999px; color: #FFFFFF; font-size: 11px; font-weight: 800; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.35); display: flex; align-items: center; gap: 5px; backdrop-filter: blur(8px);">
-          <span style="color: #F59E0B; font-size: 8px;">●</span> Foogle Cafe · Panchwati
+          <span style="color: #F59E0B; font-size: 8px;">●</span> How About Coffee · Jagatpura
         </div>
 
         <!-- Pin Icon Disc with Radar Waves -->
-        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #183B2B; border: 2.5px solid #F59E0B; box-shadow: 0 10px 25px rgba(0,0,0,0.45); font-size: 20px;">
+        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #183B2B; border: 2.5px solid #F59E0B; box-shadow: 0 10px 25px rgba(0,0,0,0.45);">
           <div style="position: absolute; inset: -4px; border-radius: 50%; background: rgba(245, 158, 11, 0.4); animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; z-index: -1;"></div>
-          🍔
+          <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true" style="filter: drop-shadow(0 2px 2px rgba(0,0,0,.35));">
+            <defs>
+              <linearGradient id="coffee-cup-ceramic" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#fffdf7"/>
+                <stop offset=".55" stop-color="#e9dfcc"/>
+                <stop offset="1" stop-color="#b9a98e"/>
+              </linearGradient>
+              <linearGradient id="coffee-liquid" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#b9783c"/>
+                <stop offset=".45" stop-color="#6f351c"/>
+                <stop offset="1" stop-color="#3e1c12"/>
+              </linearGradient>
+            </defs>
+            <path d="M15 11c-2-2 2-3 0-6M24 10c-2-2 2-3 0-6M33 11c-2-2 2-3 0-6" fill="none" stroke="#f6e8ca" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+            <path d="M11 18h23v13a9 9 0 0 1-9 9h-5a9 9 0 0 1-9-9V18Z" fill="url(#coffee-cup-ceramic)" stroke="#fff8e8" stroke-width="1.4"/>
+            <path d="M34 21h3a5 5 0 0 1 0 10h-4" fill="none" stroke="#e8dcc7" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M13 20h19v4H13z" fill="url(#coffee-liquid)"/>
+            <path d="M13 20c3-2 5 1 8 0s5-2 10 0" fill="none" stroke="#f0c58b" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M16 27v5a5 5 0 0 0 5 5" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".55"/>
+            <path d="M10 42h27" stroke="#d6b16f" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M14 44h19" stroke="#f8e6c1" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+          </svg>
         </div>
 
         <!-- Pin Pointer Stem (points down to the ground) -->
@@ -113,7 +136,7 @@ export const RotatingLocationMap: React.FC = () => {
     `;
 
     el.addEventListener('click', () => {
-      window.open(FOOGLE_BUSINESS_INFO.location.googleMapsSearchUrl, '_blank', 'noopener,noreferrer');
+      window.open(BUSINESS_INFO.location.googleMapsSearchUrl, '_blank', 'noopener,noreferrer');
     });
 
     return el;
@@ -127,7 +150,7 @@ export const RotatingLocationMap: React.FC = () => {
     const map = new ml.Map({
       container: mapContainerRef.current,
       style: initialStyle,
-      center: FOOGLE_COORDINATES,
+      center: BUSINESS_COORDINATES,
       zoom: 17.5,
       pitch: 35,
       bearing: 0,
@@ -146,7 +169,7 @@ export const RotatingLocationMap: React.FC = () => {
       // Add custom branded marker anchored at bottom tip
       const markerElement = createMarkerElement();
       const marker = new ml.Marker({ element: markerElement, anchor: 'bottom' })
-        .setLngLat(FOOGLE_COORDINATES)
+        .setLngLat(BUSINESS_COORDINATES)
         .addTo(map);
 
       markerRef.current = marker;
@@ -193,7 +216,7 @@ export const RotatingLocationMap: React.FC = () => {
           const ml = (typeof window !== 'undefined' && (window as any).maplibregl) || maplibregl;
           const markerElement = createMarkerElement();
           const marker = new ml.Marker({ element: markerElement, anchor: 'bottom' })
-            .setLngLat(FOOGLE_COORDINATES)
+            .setLngLat(BUSINESS_COORDINATES)
             .addTo(mapRef.current);
           markerRef.current = marker;
           mapRef.current.resize();
@@ -205,7 +228,7 @@ export const RotatingLocationMap: React.FC = () => {
   const resetToCenter = useCallback(() => {
     if (!mapRef.current) return;
     mapRef.current.easeTo({
-      center: FOOGLE_COORDINATES,
+      center: BUSINESS_COORDINATES,
       zoom: 17.5,
       pitch: 35,
       bearing: 0,
@@ -231,6 +254,13 @@ export const RotatingLocationMap: React.FC = () => {
     >
       {/* MapLibre Canvas Container */}
       <div ref={mapContainerRef} className="absolute inset-0 w-full h-full" />
+
+      {!isLoaded && (
+        <div className="cafe-map-skeleton absolute inset-0 z-30" aria-live="polite" aria-label="Loading map">
+          <div className="cafe-map-skeleton__roads" /><div className="cafe-map-skeleton__pin">☕</div>
+          <p>Brewing your route</p>
+        </div>
+      )}
 
       {/* Top Right: Only Satellite Mode Switcher Button */}
       <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-10 pointer-events-auto">
@@ -283,8 +313,8 @@ export const RotatingLocationMap: React.FC = () => {
         <button
           type="button"
           onClick={resetToCenter}
-          aria-label="Re-center Foogle"
-          title="Re-center on Foogle"
+          aria-label="Re-center How About Coffee"
+          title="Re-center on How About Coffee"
           className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer text-amber-500"
           style={{
             backgroundColor: 'color-mix(in srgb, var(--color-bg-surface) 90%, transparent)',
@@ -312,7 +342,7 @@ export const RotatingLocationMap: React.FC = () => {
 
         {/* Live Directions Link Pill */}
         <a
-          href={FOOGLE_BUSINESS_INFO.location.googleMapsSearchUrl}
+          href={BUSINESS_INFO.location.googleMapsSearchUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all hover:scale-105 shadow-md text-white pointer-events-auto cursor-pointer"

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from '../common/Container';
 import { SectionHeading } from '../common/SectionHeading';
 import { SurfaceCard } from '../common/SurfaceCard';
-import { FOOGLE_BUSINESS_INFO } from '../../data/businessInfo';
+import { BUSINESS_INFO } from '../../data/businessInfo';
 import {
   Phone,
   Mail,
@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export const ContactSection: React.FC = () => {
-  const { contact, operatingHours, location, dining } = FOOGLE_BUSINESS_INFO;
+  const { contact, operatingHours, location, dining } = BUSINESS_INFO;
 
   return (
     <section
@@ -35,8 +35,8 @@ export const ContactSection: React.FC = () => {
         <div className="mb-10 sm:mb-12">
           <SectionHeading
             eyebrow="GET IN TOUCH"
-            title="Let's Make It a Foogle Day"
-            description="Planning a visit or have a question? Get in touch with Foogle Café in Panchwati, Udaipur."
+            title="Let's Make It a Coffee Day"
+            description="Planning a visit or have a question? Get in touch with How About Coffee in Jagatpura, Jaipur."
             titleLevel="h2"
           />
         </div>
@@ -60,7 +60,7 @@ export const ContactSection: React.FC = () => {
                   We’re Here to Welcome You
                 </h3>
                 <p className="text-sm mt-1.5 leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-                  Planning a catch-up, late-night craving, or takeaway? Connect with Foogle Café in Panchwati directly through phone, email, or social channels.
+                  Planning a catch-up, late-night craving, or takeaway? Connect with How About Coffee in Jagatpura directly through phone, email, or social channels.
                 </p>
               </div>
 
@@ -197,7 +197,7 @@ export const ContactSection: React.FC = () => {
                     </div>
                     <div className="min-w-0">
                       <span className="text-xs font-bold block" style={{ color: 'var(--color-text-primary)' }}>
-                        Panchwati Hub
+                        Jagatpura Hub
                       </span>
                       <span className="text-xs font-medium block text-emerald-600 dark:text-emerald-400 truncate mt-0.5">
                         Opposite RK Mall
@@ -334,7 +334,7 @@ export const ContactSection: React.FC = () => {
                       Opening Hours
                     </h3>
                     <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-                      Panchwati Dining Schedule
+                      Jagatpura Dining Schedule
                     </p>
                   </div>
                 </div>

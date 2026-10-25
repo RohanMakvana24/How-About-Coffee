@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { FOOGLE_BUSINESS_INFO } from '../data/businessInfo';
+import { BUSINESS_INFO } from '../data/businessInfo';
 
 export type OrderType = 'dine-in' | 'takeaway' | 'delivery';
 
@@ -43,7 +43,7 @@ export interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = 'foogle_cafe_cart_v1';
+const CART_STORAGE_KEY = 'how_about_coffee_cart_v1';
 
 // Default starter item from Hero: Mexican Premium Burger
 export const HERO_BURGER_ITEM: Omit<CartItem, 'quantity'> = {
@@ -52,7 +52,7 @@ export const HERO_BURGER_ITEM: Omit<CartItem, 'quantity'> = {
   price: 289,
   category: 'Burgers & Specials',
   description: 'Double smashed patty · melted gouda · smoked paprika',
-  imageUrl: '/images/photos/aloo-tikki-burger.webp',
+  imageUrl: '/images/photos/menu-crispy-paneer-burger.webp',
 };
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -150,8 +150,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .join('\n');
 
     return [
-      '🍽️ *NEW ORDER — FOOGLE CAFÉ*',
-      '_Panchwati, Udaipur, Rajasthan_',
+      '☕ *NEW ORDER — HOW ABOUT COFFEE*',
+      '_Jagatpura, Jaipur, Rajasthan_',
       '━━━━━━━━━━━━━━━━━━━━',
       `👤 *Customer Name:* ${customerName.trim() || 'Guest'}`,
       `📍 *Order Type:* ${orderTypeLabel}`,
@@ -168,7 +168,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       `✨ *GRAND TOTAL:* ₹${subtotal}`,
       '━━━━━━━━━━━━━━━━━━━━',
       '📍 *Pickup / Dine-in Address:*',
-      'Foogle Café, G1 Tirupati Balaji Apt, Panchwati, Udaipur',
+      'How About Coffee, Aryaveer Nagar, Jagatpura, Jaipur',
       '',
       'Please confirm my order and let me know the preparation time! 🙏',
     ]
@@ -177,8 +177,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [items, customerName, orderType, tableOrAddress, orderNotes, subtotal]);
 
   const getWhatsAppOrderUrl = useCallback(() => {
-    // Official phone number: +91 82792 11527 -> clean to digits '918279211527'
-    const rawPhone = FOOGLE_BUSINESS_INFO.contact.phone || '918279211527';
+    const rawPhone = BUSINESS_INFO.contact.phone || '+91 90579 99922';
     const cleanPhone = rawPhone.replace(/\D/g, '');
     const message = getFormattedOrderMessage();
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;

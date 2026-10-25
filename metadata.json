@@ -1,6 +1,6 @@
 {
-  "name": "Foogle Cafe & Restaurant",
-  "description": "Premium restaurant and cafe website for Foogle in Panchwati, Udaipur, Rajasthan featuring categorized digital menu, signature dishes, visual gallery, and location details.",
+  "name": "How About Coffee, Jagatpura, Jaipur",
+  "description": "How About Coffee is a café and food destination in Jagatpura, Jaipur offering coffee, pizza, sandwiches, desserts, and casual dining with a modern cafe vibe.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

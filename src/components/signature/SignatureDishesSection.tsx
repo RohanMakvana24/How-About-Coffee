@@ -1,202 +1,54 @@
 import React from 'react';
-import { Container } from '../common/Container';
-import { SectionHeading } from '../common/SectionHeading';
-import { MenuFoodVisual } from '../menu/MenuFoodVisual';
+import { ArrowRight, Coffee, Heart, Sparkles } from 'lucide-react';
 import { MENU_ITEMS } from '../../data/menuData';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { CafeImage } from '../ui/CafeImage';
+
+const pick = (id: string) => MENU_ITEMS.find((item) => item.id === id)!;
 
 export const SignatureDishesSection: React.FC = () => {
-  // Select the 3 highlighted dishes from our existing menu data
-  const mainFeature = MENU_ITEMS.find((item) => item.id === 'pizza-foogle-special') || MENU_ITEMS[0];
-  const supportingDish1 = MENU_ITEMS.find((item) => item.id === 'pizza-paneer-tikka') || MENU_ITEMS[1];
-  const supportingDish2 = MENU_ITEMS.find((item) => item.id === 'dessert-sizzling-brownie') || MENU_ITEMS[MENU_ITEMS.length - 2];
-
-  const scrollToMenu = () => {
-    const menuElement = document.querySelector('#menu');
-    if (menuElement) {
-      menuElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const coffee = pick('hazelnut-cappuccino');
+  const pizza = pick('farm-house-pizza');
+  const dessert = pick('brownie-ice-cream');
 
   return (
-    <section
-      aria-labelledby="signature-dishes-heading"
-      className="py-16 sm:py-24 border-t transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--color-bg-page)',
-        borderColor: 'var(--color-border-subtle)',
-      }}
-    >
-      <Container>
-        {/* Section Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
-          <SectionHeading
-            eyebrow="CURATED PICKS"
-            title="Foogle Favourites"
-            description="A closer look at the flavours that make every craving worth following."
-            titleLevel="h2"
-          />
-
-          <button
-            type="button"
-            onClick={scrollToMenu}
-            className="inline-flex items-center gap-1.5 text-xs font-bold whitespace-nowrap self-start md:self-auto hover:underline focus-visible:outline-2 rounded cursor-pointer"
-            style={{ color: 'var(--color-brand-primary)' }}
-          >
-            <span>Browse Full Menu</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+    <section className="signature-section relative py-16 sm:py-24" style={{ background: 'var(--color-bg-surface)' }}>
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="mb-3 flex items-center gap-2 text-[10px] font-black uppercase tracking-[.24em]" style={{ color: 'var(--color-brand-accent)' }}><Heart className="h-4 w-4" /> Loved combinations</p>
+            <h2 className="text-4xl font-black tracking-[-.04em] sm:text-6xl" style={{ color: 'var(--color-text-primary)' }}>Three reasons to say<br /><em style={{ color: 'var(--color-brand-primary)' }}>“one more, please.”</em></h2>
+          </div>
+          <button onClick={() => document.querySelector('#menu')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex cursor-pointer items-center gap-2 self-start text-xs font-black" style={{ color: 'var(--color-brand-primary)' }}>Browse the complete menu <ArrowRight className="h-4 w-4" /></button>
         </div>
 
-        {/* Asymmetric Desktop Composition: 1 Large Feature Card (left) + 2 Stacked Supporting Cards (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-          {/* Main Large Feature Card (Cols 1 to 7) */}
-          <article
-            className="lg:col-span-7 group flex flex-col justify-between rounded-[var(--radius-xl)] border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-            style={{
-              backgroundColor: 'var(--color-card-bg)',
-              borderColor: 'var(--color-card-border)',
-            }}
-          >
-            <div>
-              {/* Feature Food Visual Frame */}
-              <div className="relative w-full overflow-hidden">
-                <MenuFoodVisual item={mainFeature} aspectRatio="16/10" className="rounded-none" />
-                <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 text-xs font-bold text-white shadow-md z-10">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Chef Highlight</span>
-                </div>
-              </div>
-
-              {/* Feature Card Text Content */}
-              <div className="p-6 sm:p-8 space-y-3">
-                <div
-                  className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: 'var(--color-brand-primary)' }}
-                >
-                  {mainFeature.categoryLabel} Specialty
-                </div>
-
-                <h3
-                  className="text-2xl sm:text-3xl font-extrabold tracking-tight group-hover:text-[var(--color-brand-primary)] transition-colors"
-                  style={{
-                    color: 'var(--color-text-primary)',
-                    textWrap: 'balance',
-                  }}
-                >
-                  {mainFeature.name}
-                </h3>
-
-                <p
-                  className="text-sm sm:text-base leading-relaxed max-w-xl"
-                  style={{ color: 'var(--color-text-secondary)' }}
-                >
-                  {mainFeature.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Feature Card Bottom Meta */}
-            <div
-              className="px-6 sm:px-8 py-4 border-t flex items-center justify-between text-xs"
-              style={{
-                borderColor: 'var(--color-border-subtle)',
-                backgroundColor: 'var(--color-bg-surface)',
-              }}
-            >
-              <span className="font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>
-                Panchwati Kitchen Selection
-              </span>
-              <span className="font-bold" style={{ color: 'var(--color-brand-primary)' }}>
-                Woodfired Special
-              </span>
+        <div className="grid gap-5 lg:grid-cols-12 lg:grid-rows-2">
+          <article className="group relative min-h-[500px] overflow-hidden rounded-[2.25rem] lg:col-span-7 lg:row-span-2">
+            <CafeImage src={coffee.imageUrl} alt={coffee.name} containerClassName="absolute inset-0" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B06]/90 via-[#1A0B06]/10 to-transparent" />
+            <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-[9px] font-black uppercase tracking-[.17em] text-[#4A2416] backdrop-blur sm:left-7 sm:top-7"><Coffee className="h-3.5 w-3.5" /> Coffee favourite</div>
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-9">
+              <p className="mb-2 text-[10px] font-black uppercase tracking-[.2em] text-[#F8B47C]">Start with something warm</p>
+              <div className="flex items-end justify-between gap-4"><div><h3 className="text-3xl font-black sm:text-5xl">{coffee.name}</h3><p className="mt-3 max-w-lg text-sm leading-6 text-white/75">{coffee.description}</p></div><span className="shrink-0 text-xl font-black text-[#FFC18E]">{coffee.price}</span></div>
             </div>
           </article>
 
-          {/* Two Supporting Stacked Cards (Cols 8 to 12) */}
-          <div className="lg:col-span-5 flex flex-col gap-6 sm:gap-8 justify-between">
-            {/* Supporting Dish 1 */}
-            <article
-              className="group flex-1 flex flex-col justify-between rounded-[var(--radius-xl)] border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              style={{
-                backgroundColor: 'var(--color-card-bg)',
-                borderColor: 'var(--color-card-border)',
-              }}
-            >
-              <div className="flex flex-col sm:flex-row h-full">
-                <div className="w-full sm:w-2/5 aspect-[4/3] sm:aspect-auto overflow-hidden shrink-0 relative">
-                  <MenuFoodVisual item={supportingDish1} className="h-full rounded-none" />
-                </div>
-                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
-                  <div className="space-y-1.5">
-                    <span
-                      className="text-[11px] font-semibold uppercase tracking-wider"
-                      style={{ color: 'var(--color-brand-primary)' }}
-                    >
-                      {supportingDish1.categoryLabel}
-                    </span>
-                    <h3
-                      className="text-lg font-bold tracking-tight group-hover:text-[var(--color-brand-primary)] transition-colors"
-                      style={{ color: 'var(--color-text-primary)' }}
-                    >
-                      {supportingDish1.name}
-                    </h3>
-                    <p
-                      className="text-xs sm:text-sm leading-relaxed line-clamp-2"
-                      style={{ color: 'var(--color-text-secondary)' }}
-                    >
-                      {supportingDish1.description}
-                    </p>
-                  </div>
-                  <div className="text-[11px] font-medium pt-3 text-right" style={{ color: 'var(--color-text-tertiary)' }}>
-                    Seasonal Favourite
-                  </div>
-                </div>
+          {[{ item: pizza, note: 'Add something savoury', icon: Sparkles }, { item: dessert, note: 'Finish on a sweet note', icon: Heart }].map(({ item, note, icon: Icon }) => (
+            <article key={item.id} className="group grid min-h-[235px] overflow-hidden rounded-[2rem] border sm:grid-cols-[.95fr_1.05fr] lg:col-span-5" style={{ background: 'var(--color-bg-page)', borderColor: 'var(--color-border-subtle)' }}>
+              <div className="relative min-h-[210px] overflow-hidden sm:min-h-0"><CafeImage src={item.imageUrl} alt={item.name} containerClassName="absolute inset-0" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /><span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-black text-[#4A2416]">100% VEG</span></div>
+              <div className="flex flex-col justify-center p-5 sm:p-6">
+                <p className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[.16em]" style={{ color: 'var(--color-brand-accent)' }}><Icon className="h-3.5 w-3.5" /> {note}</p>
+                <h3 className="mt-2 text-xl font-black leading-tight" style={{ color: 'var(--color-text-primary)' }}>{item.name}</h3>
+                <p className="mt-2 line-clamp-3 text-xs leading-5" style={{ color: 'var(--color-text-secondary)' }}>{item.description}</p>
+                <p className="mt-4 text-base font-black" style={{ color: 'var(--color-brand-primary)' }}>{item.price}</p>
               </div>
             </article>
-
-            {/* Supporting Dish 2 */}
-            <article
-              className="group flex-1 flex flex-col justify-between rounded-[var(--radius-xl)] border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              style={{
-                backgroundColor: 'var(--color-card-bg)',
-                borderColor: 'var(--color-card-border)',
-              }}
-            >
-              <div className="flex flex-col sm:flex-row h-full">
-                <div className="w-full sm:w-2/5 aspect-[4/3] sm:aspect-auto overflow-hidden shrink-0 relative">
-                  <MenuFoodVisual item={supportingDish2} className="h-full rounded-none" />
-                </div>
-                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
-                  <div className="space-y-1.5">
-                    <span
-                      className="text-[11px] font-semibold uppercase tracking-wider"
-                      style={{ color: 'var(--color-brand-primary)' }}
-                    >
-                      {supportingDish2.categoryLabel}
-                    </span>
-                    <h3
-                      className="text-lg font-bold tracking-tight group-hover:text-[var(--color-brand-primary)] transition-colors"
-                      style={{ color: 'var(--color-text-primary)' }}
-                    >
-                      {supportingDish2.name}
-                    </h3>
-                    <p
-                      className="text-xs sm:text-sm leading-relaxed line-clamp-2"
-                      style={{ color: 'var(--color-text-secondary)' }}
-                    >
-                      {supportingDish2.description}
-                    </p>
-                  </div>
-                  <div className="text-[11px] font-medium pt-3 text-right" style={{ color: 'var(--color-text-tertiary)' }}>
-                    Dessert Highlight
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
+          ))}
         </div>
-      </Container>
+
+        <p className="mt-5 text-center text-[10px] font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>A sample pairing inspired by popular items mentioned across current public listings.</p>
+      </div>
     </section>
   );
 };
+
+export default SignatureDishesSection;

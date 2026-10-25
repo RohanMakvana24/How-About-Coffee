@@ -49,7 +49,7 @@ export const FloatingCartBar: React.FC = () => {
               className="text-xs font-bold block"
               style={{ color: isDark ? '#FFFFFF' : '#183B2B' }}
             >
-              Foogle Tray ({totalItems} {totalItems === 1 ? 'item' : 'items'})
+              Coffee Tray ({totalItems} {totalItems === 1 ? 'item' : 'items'})
             </span>
             <span className="text-[11px] font-mono opacity-60">Tap to review &amp; order</span>
           </div>

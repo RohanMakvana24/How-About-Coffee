@@ -126,7 +126,7 @@ export const GalleryLightbox: React.FC<GalleryLightboxProps> = ({ item, onClose 
               Commercial Cafe Photoshoot
             </span>
             <span className="text-[11px] mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
-              {item.tabletopMaterial || 'Travertine & Dark Oak Tabletop'} · Panchwati, Udaipur
+              {item.tabletopMaterial || 'Travertine & Dark Oak Tabletop'} · Jagatpura, Jaipur
             </span>
           </div>
         </div>

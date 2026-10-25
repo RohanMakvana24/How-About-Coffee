@@ -42,7 +42,7 @@ export const VisitCtaSection: React.FC = () => {
               className="text-xs font-bold uppercase tracking-wider"
               style={{ color: 'var(--color-brand-primary)' }}
             >
-              Panchwati, Udaipur
+              Jagatpura, Jaipur
             </span>
           </div>
 
@@ -66,7 +66,7 @@ export const VisitCtaSection: React.FC = () => {
               textWrap: 'pretty',
             }}
           >
-            Explore the menu and plan your next visit to Foogle. Fresh flavours, comforting cafe classics,
+            Explore the menu and plan your next visit to How About Coffee. Fresh flavours, comforting cafe classics,
             and warm Rajasthan hospitality are waiting for you.
           </p>
 
@@ -102,7 +102,7 @@ export const VisitCtaSection: React.FC = () => {
             className="text-xs pt-4"
             style={{ color: 'var(--color-text-tertiary)' }}
           >
-            Foogle Cafe &amp; Restaurant · Dine-in &amp; Takeaway in Panchwati, Udaipur
+            How About Coffee · Dine-in &amp; Takeaway in Jagatpura, Jaipur
           </span>
         </div>
       </Container>

@@ -1,116 +1,53 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Marquee } from "@/components/ui/marquee-01-utils/marquee";
+import { Marquee } from '@/components/ui/marquee-01-utils/marquee';
 
-const reviews = [
-  {
-    name: "Ken Masters",
-    username: "@kmasters",
-    body: "“Our productivity has nearly doubled since onboarding. Automation features removed repetitive tasks, allowing our team to focus on building instead of managing operations.”",
-    profile: "https://cdn.21st.dev/assets/mirror/b5/b539abc60701ab9cbcd73f9241d13a14a09582a4fd06c65784cb5567d77a2e0e.webp",
-  },
-  {
-    name: "Kira Athrun",
-    username: "@kathrun",
-    body: "“What surprised us most was how quickly our team adapted. Minimal learning curve, excellent documentation, and powerful features make it a must-have for modern SaaS companies.”",
-    profile: "https://cdn.21st.dev/assets/mirror/2b/2bc5f22fa3400c61a2161d14e3dce5a0804badebfc1b3d9cbe844feaa3b72180.webp",
-  },
-  {
-    name: "Lirael Nassun",
-    username: "@lnassun",
-    body: "“This is easily one of the most reliable SaaS tools we’ve adopted. The UI is intuitive, integrations are seamless, and it saves us countless hours every week.”",
-    profile: "https://cdn.21st.dev/assets/mirror/e1/e1e172821860559f890ef5ef7c14cc66a6c1ec001f3bbeb6dddd349c0081dd6b.webp",
-  },
-  {
-    name: "Jessica",
-    username: "@jessica",
-    body: "Switching to this platform streamlined our entire workflow. Setup was effortless, performance improved instantly, and our team now ships features faster without worrying about infrastructure.",
-    profile: "https://cdn.21st.dev/assets/mirror/61/61fda783ca2662349458bad61a434038016f05d6a14bd7c5a314f48c8ee8be03.webp",
-  },
-  {
-    name: "Jenny",
-    username: "@jenny",
-    body: "“We evaluated multiple solutions, but this stood out immediately. It’s fast, scalable, and thoughtfully designed for growing teams that need stability without added complexity.”",
-    profile: "https://cdn.21st.dev/assets/mirror/c5/c5ee2e124ea7334450d30a46607f793534f567e97d4b708cda110a06aeed4953.webp",
-  },
-  {
-    name: "Kira Athrun",
-    username: "@kathrun",
-    body: "“What surprised us most was how quickly our team adapted. Minimal learning curve, excellent documentation, and powerful features make it a must-have for modern SaaS companies.”",
-    profile: "https://cdn.21st.dev/assets/mirror/2b/2bc5f22fa3400c61a2161d14e3dce5a0804badebfc1b3d9cbe844feaa3b72180.webp",
-  },
-  {
-    name: "Ken Masters",
-    username: "@kmasters",
-    body: "“Our productivity has nearly doubled since onboarding. Automation features removed repetitive tasks, allowing our team to focus on building instead of managing operations.”",
-    profile: "https://cdn.21st.dev/assets/mirror/b5/b539abc60701ab9cbcd73f9241d13a14a09582a4fd06c65784cb5567d77a2e0e.webp",
-  },
-  {
-    name: "Jessica",
-    username: "@jessica",
-    body: "Switching to this platform streamlined our entire workflow. Setup was effortless, performance improved instantly, and our team now ships features faster without worrying about infrastructure.",
-    profile: "https://cdn.21st.dev/assets/mirror/61/61fda783ca2662349458bad61a434038016f05d6a14bd7c5a314f48c8ee8be03.webp",
-  },
-  {
-    name: "Jenny",
-    username: "@jenny",
-    body: "“We evaluated multiple solutions, but this stood out immediately. It’s fast, scalable, and thoughtfully designed for growing teams that need stability without added complexity.”",
-    profile: "https://cdn.21st.dev/assets/mirror/c5/c5ee2e124ea7334450d30a46607f793534f567e97d4b708cda110a06aeed4953.webp",
-  },
+type Review = {
+  name: string;
+  meta: string;
+  body: string;
+  highlight?: string;
+};
+
+const REVIEWS: Review[] = [
+  { name: 'Shailendra Singh', meta: 'Local Guide · 8 months ago', body: 'Coffee taste was good—not too strong, not too light, just balanced. The ambience is calm and comfortable.', highlight: 'Balanced coffee' },
+  { name: 'Jitender Pokhariya', meta: 'Local Guide · 3 months ago', body: 'One of the most charming cafés in Jaipur. Warm, cozy and perfect for quality time with friends or working peacefully.', highlight: 'Cozy ambience' },
+  { name: 'Kritika Singh', meta: 'Dine-in · 8 months ago', body: 'The paneer salad was super fresh, colourful and perfectly balanced—wholesome yet indulgent.', highlight: 'Paneer salad' },
+  { name: 'Vedika Dadhich', meta: 'Dine-in · 5 months ago', body: 'The iced tea was refreshing and perfectly balanced—not too sweet, not too bitter.', highlight: 'Iced tea' },
+  { name: 'Aditi Garg', meta: 'Dine-in · 5 months ago', body: 'A beautiful café with amazing vibes, great food and perfectly brewed coffee. Every corner feels aesthetic.', highlight: 'Aesthetic space' },
+  { name: 'smruthi v', meta: '7 months ago', body: 'I love the place, the ambience and the food. Definitely try their drinks—some of the best coffee I have had in Rajasthan.', highlight: 'Coffee & drinks' },
+  { name: 'Pranav Lumb', meta: 'Dine-in · 3 months ago', body: 'Good ambience, good food and drinks, polite staff and a clean space. You can also play Uno and Jenga with friends.', highlight: 'Games with friends' },
+  { name: 'Kritika Bansal', meta: 'Dine-in · 5 months ago', body: 'Great place to hang out. The Vietnamese coffee and subway sandwich were very good. Worth visiting.', highlight: 'Vietnamese coffee' },
+  { name: 'LAVINA TANDON', meta: 'Local Guide · 11 months ago', body: 'A cosy Jagatpura café with Vietnamese coffee, croissants and wraps. A go-to place for winter.', highlight: 'Croissants & wraps' },
+  { name: 'MAHESH KUMAR SHARMA', meta: 'Local Guide · a year ago', body: 'Perfect for a casual hangout or work session. The cold brew and classic cappuccino were excellent.', highlight: 'Cold brew' },
 ];
 
-const firstRow = reviews.slice(0, reviews.length / 2);
-const secondRow = reviews.slice(reviews.length / 2);
+const firstRow = REVIEWS.slice(0, 5);
+const secondRow = REVIEWS.slice(5);
 
-function ReviewCard({
-  profile,
-  name,
-  username,
-  body,
-}: {
-  profile: string;
-  name: string;
-  username: string;
-  body: string;
-}) {
+function ReviewCard({ name, meta, body, highlight }: Review) {
+  const initial = name.trim().charAt(0).toUpperCase();
   return (
-    <Card className="w-80 cursor-pointer overflow-hidden border transition-all duration-300 hover:shadow-lg">
-      <CardContent className="p-4 flex flex-col justify-between h-full">
-        <div className="flex items-center gap-3">
-          <img
-            className="h-10 w-10 rounded-full object-cover"
-            alt={name}
-            src={profile}
-          />
-          <div className="flex flex-col">
-            <figcaption className="text-sm font-medium text-foreground">
-              {name}
-            </figcaption>
-            <p className="text-xs text-muted-foreground">{username}</p>
-          </div>
-        </div>
-        <blockquote className="mt-3 text-sm text-foreground/80">
-          {body}
-        </blockquote>
-      </CardContent>
-    </Card>
+    <article className="w-[min(82vw,335px)] rounded-[1.5rem] border p-5 shadow-[0_14px_34px_rgba(59,25,10,.08)] transition-transform duration-300 hover:-translate-y-1" style={{ background: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}>
+      <div className="flex items-center gap-3">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-black text-white" style={{ background: 'linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent))' }}>{initial}</span>
+        <div className="min-w-0"><h3 className="truncate text-sm font-black" style={{ color: 'var(--color-text-primary)' }}>{name}</h3><p className="mt-0.5 text-[10px] font-bold" style={{ color: 'var(--color-text-secondary)' }}>{meta}</p></div>
+      </div>
+      <p className="mt-4 min-h-[66px] text-sm leading-6" style={{ color: 'var(--color-text-secondary)' }}>“{body}”</p>
+      {highlight && <span className="mt-4 inline-flex rounded-full px-2.5 py-1 text-[9px] font-black uppercase tracking-[.12em]" style={{ background: 'var(--color-brand-surface-tint)', color: 'var(--color-brand-primary)' }}>{highlight}</span>}
+    </article>
   );
 }
 
 export function MarqueeDemo() {
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg">
-      <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review, index) => (
-          <ReviewCard key={index} {...review} />
-        ))}
+    <div className="relative w-full overflow-hidden py-2">
+      <Marquee reverse pauseOnHover className="[--duration:34s]">
+        {firstRow.map((review) => <ReviewCard key={review.name} {...review} />)}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review, index) => (
-          <ReviewCard key={index} {...review} />
-        ))}
+      <Marquee pauseOnHover className="[--duration:38s]">
+        {secondRow.map((review) => <ReviewCard key={review.name} {...review} />)}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background"></div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r sm:w-24" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l sm:w-24" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
     </div>
   );
 }

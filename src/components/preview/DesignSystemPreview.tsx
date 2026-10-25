@@ -100,7 +100,7 @@ export const DesignSystemPreview: React.FC = () => {
               >
                 <span>Phase 1 Foundation</span>
                 <span aria-hidden="true">·</span>
-                <span>Panchwati, Udaipur, Rajasthan</span>
+                <span>Jagatpura, Jaipur, Rajasthan</span>
                 <span aria-hidden="true">·</span>
                 <span>Design System &amp; Tokens</span>
               </div>
@@ -125,7 +125,7 @@ export const DesignSystemPreview: React.FC = () => {
                   textWrap: 'pretty',
                 }}
               >
-                Foogle is a cafe and restaurant in Panchwati, Udaipur, Rajasthan, crafted for fresh flavours,
+                How About Coffee is a cafe and restaurant in Jagatpura, Jaipur, Rajasthan, crafted for fresh flavours,
                 contemporary hospitality, and energetic community gatherings. This foundation establishes
                 the design tokens, accessible light/dark theming, and responsive layout primitives.
               </p>
@@ -292,7 +292,7 @@ export const DesignSystemPreview: React.FC = () => {
                   className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight"
                   style={{ color: 'var(--color-text-primary)' }}
                 >
-                  Flavours crafted for Panchwati
+                  Flavours crafted for Jagatpura
                 </div>
               </div>
 
@@ -350,11 +350,11 @@ export const DesignSystemPreview: React.FC = () => {
                   className="flex items-center gap-2 text-xs font-medium"
                   style={{ color: 'var(--color-text-secondary)' }}
                 >
-                  <span>Panchwati Location</span>
+                  <span>Jagatpura Location</span>
                   <span aria-hidden="true">·</span>
                   <span className="font-mono tabular-nums">24.5854° N, 73.7125° E</span>
                   <span aria-hidden="true">·</span>
-                  <span>Udaipur, Rajasthan</span>
+                  <span>Jaipur, Rajasthan</span>
                 </div>
               </div>
             </SurfaceCard>
@@ -468,7 +468,7 @@ export const DesignSystemPreview: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
               <div className="space-y-2">
                 <MediaFrame
-                  alt="Foogle signature dish slot"
+                  alt="How About Coffee signature dish slot"
                   aspectRatio="16:9"
                   placeholderTitle="Hero Visual Slot"
                   placeholderCategory="Aspect 16:9"
@@ -480,7 +480,7 @@ export const DesignSystemPreview: React.FC = () => {
 
               <div className="space-y-2">
                 <MediaFrame
-                  alt="Foogle menu item slot"
+                  alt="How About Coffee menu item slot"
                   aspectRatio="4:3"
                   placeholderTitle="Signature Dish Slot"
                   placeholderCategory="Aspect 4:3"
@@ -492,7 +492,7 @@ export const DesignSystemPreview: React.FC = () => {
 
               <div className="space-y-2">
                 <MediaFrame
-                  alt="Foogle beverage slot"
+                  alt="How About Coffee beverage slot"
                   aspectRatio="1:1"
                   placeholderTitle="Artisanal Beverage Slot"
                   placeholderCategory="Aspect 1:1"
@@ -539,7 +539,7 @@ export const DesignSystemPreview: React.FC = () => {
                     style={{ color: 'var(--color-text-secondary)' }}
                   >
                     All Phase 1 requirements are established: Design tokens, light &amp; dark mode persistence,
-                    original Foogle wordmark, typography scale, responsive container, and zero-pill discipline.
+                    original How About Coffee wordmark, typography scale, responsive container, and zero-pill discipline.
                     No unverified business claims, menu prices, or fake reviews were introduced.
                   </p>
                 </div>
@@ -573,9 +573,9 @@ export const DesignSystemPreview: React.FC = () => {
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-2" style={{ color: 'var(--color-text-secondary)' }}>
-              <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>Foogle</span>
+              <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>How About Coffee</span>
               <span aria-hidden="true">·</span>
-              <span>Panchwati, Udaipur, Rajasthan, India</span>
+              <span>Jagatpura, Jaipur, Rajasthan, India</span>
               <span aria-hidden="true">·</span>
               <span>Cafe &amp; Restaurant</span>
             </div>

@@ -1,10 +1,10 @@
 export type MenuCategoryId =
   | 'all'
-  | 'pizza'
-  | 'sandwiches'
-  | 'pasta'
-  | 'sides-snacks'
-  | 'cafe-specials'
+  | 'coffee'
+  | 'cold-coffee'
+  | 'sandwiches-wraps'
+  | 'pizza-burgers'
+  | 'snacks'
   | 'desserts';
 
 export interface MenuCategory {
@@ -20,10 +20,11 @@ export interface MenuItem {
   categoryLabel: string;
   description: string;
   dietary?: 'veg' | 'jain-available';
-  price?: string; // Optional: only if verified
+  price?: string;
   imageSlug?: string;
   imageUrl?: string;
   tabletopCardPlacement?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
   tabletopMaterial?: string;
-  accentColor?: string; // One of the 4 Google-inspired brand accents or forest green
+  accentColor?: string;
+  featured?: boolean;
 }

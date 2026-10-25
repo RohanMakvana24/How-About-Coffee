@@ -11,54 +11,65 @@ import { SignatureDishesSection } from './components/signature/SignatureDishesSe
 import { MenuSection } from './components/menu/MenuSection';
 import { AboutSection } from './components/about/AboutSection';
 import { GallerySection } from './components/gallery/GallerySection';
-import { ReviewsSection } from './components/reviews/ReviewsSection';
 import { LocationSection } from './components/location/LocationSection';
 import { ContactSection } from './components/contact/ContactSection';
 import { VisitCtaSection } from './components/cta/VisitCtaSection';
-import { GravityFooter } from './components/footer/GravityFooter';
 import { CartProvider } from './context/CartContext';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { FloatingCartBar } from './components/cart/FloatingCartBar';
+import { CafeLoader } from './components/ui/CafeLoader';
+import { SmoothScroll } from './components/ui/SmoothScroll';
+import { ViewportReveal } from './components/common/ViewportReveal';
+import { LazyMount } from './components/common/LazyMount';
 
-function FoogleWebsite() {
+// These depend on WebGL/physics code and are below the fold.  Keeping their
+// modules out of the first JS payload protects the hero's frame budget.
+const ReviewsSection = React.lazy(() => import('./components/reviews/ReviewsSection'));
+const GravityFooter = React.lazy(() => import('./components/footer/GravityFooter'));
+
+
+function HowAboutCoffeeWebsite() {
 
   return (
-    <div className="min-h-screen flex flex-col w-full overflow-x-clip">
-      {/* 1. Premium Fixed Navigation Bar */}
+    <div className="relative min-h-screen flex flex-col w-full overflow-x-clip">
+      <SmoothScroll />
+      <CafeLoader />
+      {/* 1. Sticky navigation bar */}
       <Navbar />
 
-      {/* 2. Main Page Content (offset by fixed 72px navbar) */}
-      <main className="flex-1 pt-[72px]">
+
+      {/* 2. Main Page Content */}
+      <main className="relative z-10 flex-1">
         {/* Phase 2: Hero Section (Anchor #home) — with integrated scroll-driven burger assembly */}
         <HeroSection />
 
         {/* Phase 4: Signature Dishes Editorial Showcase */}
-        <SignatureDishesSection />
+        <ViewportReveal><SignatureDishesSection /></ViewportReveal>
 
         {/* Phase 3: Premium Digital Menu Section (Anchor #menu) */}
-        <MenuSection />
+        <ViewportReveal><MenuSection /></ViewportReveal>
 
         {/* Phase 5: About Section (Anchor #story) */}
-        <AboutSection />
+        <ViewportReveal><AboutSection /></ViewportReveal>
 
         {/* Phase 4: Premium Food & Cafe Gallery (Anchor #gallery) */}
-        <GallerySection />
-
-        {/* Phase 5: Customer Reviews Destination */}
-        <ReviewsSection />
-
-        {/* Phase 5: Location Information */}
-        <LocationSection />
+        <ViewportReveal><GallerySection /></ViewportReveal>
 
         {/* Phase 5: Contact Channels & Service Hours (Anchor #contact) */}
-        <ContactSection />
+        <ViewportReveal><ContactSection /></ViewportReveal>
 
         {/* Phase 5: Final Call to Action (Scroll to #menu) */}
-        <VisitCtaSection />
+        <ViewportReveal><VisitCtaSection /></ViewportReveal>
+
+        {/* Guest reviews appear as the final content section before the footer. */}
+        <ViewportReveal><LazyMount minHeight="620px" rootMargin="700px 0px"><ReviewsSection /></LazyMount></ViewportReveal>
+
+        {/* Location and live directions close the page immediately before the footer. */}
+        <ViewportReveal><LocationSection /></ViewportReveal>
       </main>
 
       {/* 3. Gravity Letters Interactive Footer */}
-      <GravityFooter />
+      <ViewportReveal><LazyMount minHeight="460px" rootMargin="700px 0px"><GravityFooter /></LazyMount></ViewportReveal>
 
       {/* 4. Luxury Cart Drawer & Floating Cart Bar for WhatsApp Ordering */}
       <CartDrawer />
@@ -71,7 +82,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <CartProvider>
-        <FoogleWebsite />
+        <HowAboutCoffeeWebsite />
       </CartProvider>
     </ThemeProvider>
   );

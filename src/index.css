@@ -1,8 +1,48 @@
 @import "tailwindcss";
 
+/* Opening coffee ritual */
+.cafe-loader { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; overflow: hidden; background: #160b07; color: #fff7ec; transition: opacity .4s ease, visibility .4s ease; }
+.cafe-loader--leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.cafe-loader__glow { position: absolute; width: min(90vw, 620px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(225,137,70,.3), rgba(96,43,19,.15) 35%, transparent 68%); filter: blur(10px); animation: cafe-glow 1.6s ease-in-out infinite; }
+.cafe-loader__content { position: relative; display: flex; flex-direction: column; align-items: center; min-width: 230px; }
+.cafe-loader__steam { display: flex; height: 65px; align-items: flex-end; gap: 12px; }
+.cafe-loader__steam i { display: block; width: 9px; height: 47px; border-left: 3px solid rgba(255,231,204,.84); border-radius: 50%; filter: blur(.2px); animation: cafe-steam 1.3s ease-in-out infinite; }
+.cafe-loader__steam i:nth-child(2) { height: 58px; animation-delay: -.45s; }.cafe-loader__steam i:nth-child(3) { height: 40px; animation-delay: -.85s; }
+.cafe-loader__cup { position: relative; width: 105px; height: 70px; border: 4px solid #fff1df; border-top: 0; border-radius: 0 0 30px 30px; background: linear-gradient(125deg, #8d4123, #3a160c); box-shadow: inset 11px -8px 16px rgba(0,0,0,.2), 0 15px 30px rgba(0,0,0,.28); }
+.cafe-loader__coffee { position: absolute; top: -9px; left: -4px; width: 105px; height: 19px; border: 4px solid #fff1df; border-radius: 50%; background: radial-gradient(ellipse, #3a1308 0 50%, #713018 53% 70%, #f7d7bd 74%); }
+.cafe-loader__handle { position: absolute; right: -34px; top: 12px; width: 34px; height: 37px; border: 4px solid #fff1df; border-left: 0; border-radius: 0 23px 23px 0; }
+.cafe-loader__eyebrow { margin: 30px 0 0; font-size: 11px; font-weight: 900; letter-spacing: .28em; text-transform: uppercase; }.cafe-loader__message { margin: 9px 0 0; color: #e6b68c; font-size: 13px; letter-spacing: .06em; }
+.cafe-loader__progress { width: 180px; height: 3px; margin-top: 22px; overflow: hidden; border-radius: 999px; background: rgba(255,244,231,.19); }.cafe-loader__progress span { display: block; width: 46%; height: 100%; border-radius: inherit; background: #e69a58; animation: cafe-progress 1.65s ease-in-out forwards; }
+@keyframes cafe-steam { 0%, 100% { opacity: .1; transform: translateY(12px) rotate(-8deg); } 50% { opacity: .9; transform: translateY(-9px) rotate(10deg); } } @keyframes cafe-glow { 50% { transform: scale(1.12); opacity: .8; } } @keyframes cafe-progress { from { transform: translateX(-110%); } to { transform: translateX(230%); } }
+@media (prefers-reduced-motion: reduce) { .cafe-loader *, .cafe-loader { animation: none !important; transition-duration: .01ms !important; } }
+
+/* Coffee crema skeleton used while photography arrives. */
+.cafe-image { position: relative; display: block; overflow: hidden; background: #ead9c8; }
+.cafe-image > picture { display: block; height: 100%; }
+.cafe-image img { display: block; opacity: .01; transform: scale(1.025); transition: opacity .62s cubic-bezier(.16, 1, .3, 1), transform .85s cubic-bezier(.16, 1, .3, 1); will-change: opacity, transform; }
+.cafe-image__skeleton { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; overflow: hidden; background: radial-gradient(circle at 50% 44%, rgba(239,165,104,.35), transparent 24%), linear-gradient(135deg, #1c0b06, #63301d 50%, #b96839); transition: opacity .5s ease, visibility .5s ease; }
+.cafe-image__skeleton::before { content: ''; position: absolute; inset: -35%; background: linear-gradient(105deg, transparent 39%, rgba(255,235,214,.42) 48%, transparent 57%); animation: cafe-skeleton-shine 1.45s linear infinite; }
+.cafe-image__cup { position: relative; z-index: 1; width: 58px; height: 36px; border: 2px solid rgba(255,237,216,.9); border-top: 0; border-radius: 0 0 20px 20px; box-shadow: inset 0 -8px 16px rgba(0,0,0,.16); }
+.cafe-image__cup::before { content: ''; position: absolute; top: -7px; left: 5px; right: 5px; height: 10px; border-radius: 50%; background: #271109; box-shadow: inset 0 2px 3px rgba(255,204,151,.38); }
+.cafe-image__cup b { position: absolute; right: -17px; top: 7px; width: 16px; height: 18px; border: 2px solid rgba(255,237,216,.9); border-left: 0; border-radius: 0 14px 14px 0; }
+.cafe-image__steam { position: absolute; z-index: 1; display: flex; gap: 8px; transform: translateY(-32px); }
+.cafe-image__steam i { width: 4px; height: 21px; border-radius: 50%; border-left: 2px solid rgba(255,238,218,.74); animation: cafe-steam 1.75s ease-in-out infinite; }
+.cafe-image__steam i:nth-child(2) { animation-delay: .28s; height: 28px; }.cafe-image__steam i:nth-child(3) { animation-delay: .55s; }
+.cafe-image__bean { position: absolute; z-index: 1; width: 18px; height: 25px; border-radius: 50%; background: #2b1108; box-shadow: inset 4px 3px 5px rgba(255,180,109,.25), 0 4px 9px rgba(0,0,0,.2); }
+.cafe-image__bean::after { content: ''; position: absolute; top: 3px; bottom: 3px; left: 8px; width: 2px; border-radius: 50%; background: rgba(245,172,107,.7); transform: rotate(18deg); }.cafe-image__bean--one { transform: translate(-62px, 24px) rotate(-28deg); }.cafe-image__bean--two { transform: translate(65px, -5px) rotate(27deg); }
+.cafe-image__skeleton strong { position: absolute; z-index: 1; bottom: 15%; font-size: 8px; font-weight: 900; letter-spacing: .23em; text-transform: uppercase; color: rgba(255,239,220,.82); }
+.cafe-image--loaded .cafe-image__skeleton { opacity: 0; visibility: hidden; }
+.cafe-image--loaded img { opacity: 1; transform: scale(1); }
+@keyframes cafe-skeleton-shine { from { transform: translateX(-45%); } to { transform: translateX(45%); } }
+
+.cafe-map-skeleton { position: relative; display: grid; min-height: 460px; place-items: center; overflow: hidden; border: 1px solid var(--color-border); border-radius: 1rem; background: #e8dfd2; isolation: isolate; }.cafe-map-skeleton::before, .cafe-map-skeleton::after { content: ''; position: absolute; inset: -25%; opacity: .7; background: repeating-linear-gradient(20deg, transparent 0 35px, rgba(96,54,32,.15) 37px 41px, transparent 44px 84px), repeating-linear-gradient(110deg, transparent 0 48px, rgba(255,252,247,.8) 51px 56px, transparent 59px 106px); transform: rotate(-5deg); }.cafe-map-skeleton::after { background: linear-gradient(105deg, transparent 35%, rgba(255,249,237,.76) 48%, transparent 61%); animation: cafe-skeleton-shine 1.5s linear infinite; }.cafe-map-skeleton__roads { position: absolute; z-index: 1; width: 75%; height: 3px; background: #ad7653; box-shadow: 0 -75px 0 #d8b79b, 0 80px 0 #d8b79b; transform: rotate(-18deg); opacity: .75; }.cafe-map-skeleton__pin { z-index: 2; display: grid; width: 62px; height: 62px; place-items: center; border: 3px solid #f5c078; border-radius: 50% 50% 50% 0; background: #183b2b; color: #fff4e5; font-size: 25px; box-shadow: 0 10px 28px rgba(41,25,15,.28); transform: rotate(-45deg); animation: cafe-map-pin 1.35s ease-in-out infinite; }.cafe-map-skeleton__pin::first-letter { transform: rotate(45deg); }.cafe-map-skeleton p { z-index: 2; align-self: end; margin: 0 0 38px; border-radius: 999px; padding: 8px 14px; background: rgba(255,252,247,.82); color: #5b3020; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 6px 20px rgba(50,28,15,.1); } @keyframes cafe-map-pin { 50% { transform: translateY(-8px) rotate(-45deg); } }
+
+/* Hero: branded doors swing open to reveal the café interior. */
+.hero-door-scene { perspective: 1700px; }.hero-door { position: absolute; z-index: 5; top: 0; bottom: 0; width: 50.4%; background: linear-gradient(120deg, #102a20, #214938 55%, #112b20); box-shadow: inset 0 0 0 10px rgba(246,214,170,.13), inset 0 0 0 18px rgba(8,25,18,.38), 0 0 40px rgba(0,0,0,.4); transform-style: preserve-3d; animation: hero-door-open 2.15s cubic-bezier(.2,.82,.16,1) .35s forwards; }.hero-door--left { left: 0; transform-origin: left center; }.hero-door--right { right: 0; transform-origin: right center; animation-name: hero-door-open-right; }.hero-door__inset { position: absolute; inset: 10% 11%; border: 2px solid rgba(246,214,170,.34); box-shadow: inset 0 0 0 14px rgba(5,20,14,.24); }.hero-door-sign { position: absolute; z-index: 8; top: 12%; left: 50%; display: grid; width: 205px; height: 92px; place-content: center; border: 2px solid #e7b274; border-radius: 6px; background: #1a4131; color: #fff1dd; box-shadow: 0 12px 28px rgba(0,0,0,.4); transform: translateX(-50%); text-align: center; animation: hero-sign-fade 2.1s ease .25s forwards; }.hero-door-sign span { font-size: 9px; font-weight: 800; letter-spacing: .27em; }.hero-door-sign strong { margin-top: 3px; font-family: Georgia, serif; font-size: 27px; font-weight: 500; letter-spacing: .04em; }.hero-door-sign i { width: 54px; height: 2px; margin: 9px auto 0; background: #e7b274; }.hero-door-copy { animation: hero-copy-in .8s ease 1.25s both; text-shadow: 0 3px 24px rgba(0,0,0,.3); } @keyframes hero-door-open { to { transform: rotateY(-82deg); } } @keyframes hero-door-open-right { to { transform: rotateY(82deg); } } @keyframes hero-sign-fade { 65% { opacity: 1; } 100% { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(.88); } } @keyframes hero-copy-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } } @media (max-width: 640px) { .hero-door { animation-duration: 1.65s; }.hero-door-sign { top: 10%; width: 165px; height: 76px; }.hero-door-sign strong { font-size: 21px; } } @media (prefers-reduced-motion: reduce) { .hero-door, .hero-door-sign, .hero-door-copy { animation: none; }.hero-door { opacity: 0; }.hero-door-sign { display: none; } }
+
 /* ==========================================================================
-   FOOGLE RESTAURANT & CAFE — DESIGN SYSTEM TOKENS (PHASE 1)
-   Location: Panchwati, Udaipur, Rajasthan, India
+   HOW ABOUT COFFEE — DESIGN SYSTEM TOKENS
+   Location: Jagatpura, Jaipur, Rajasthan, India
    ========================================================================== */
 
 :root {
@@ -213,6 +253,21 @@ html {
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  overscroll-behavior-y: none;
+}
+
+/* Lenis keeps native scroll semantics while easing each scroll frame. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
 }
 
 body {
@@ -220,7 +275,13 @@ body {
   color: var(--color-text-primary);
   min-height: 100vh;
   transition: background-color var(--transition-fast), color var(--transition-fast);
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Shared section entrance: transform/opacity only, triggered once in view. */
+.viewport-reveal { content-visibility: auto; contain-intrinsic-size: auto 650px; opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .62s cubic-bezier(.16,1,.3,1) var(--reveal-delay, 0ms), transform .62s cubic-bezier(.16,1,.3,1) var(--reveal-delay, 0ms); }
+.viewport-reveal--visible { opacity: 1; transform: translate3d(0, 0, 0); }
 
 /* Visible Keyboard Focus Discipline */
 :focus-visible {
@@ -271,6 +332,30 @@ body {
 .animate-subtle-float {
   animation: subtleFloat 4s ease-in-out infinite;
 }
+
+/* Parallax Brew-inspired hero stage: a real cup, depth layers and floating beans. */
+.pb-hero { background: radial-gradient(60% 56% at 50% 47%, #3a1d0f 0%, #1a0d07 48%, #0e0805 82%); }
+.signature-section > .mx-auto { position: relative; z-index: 2; }
+.pb-hero-glow { position: absolute; left: 50%; top: 47%; width: min(84vmin, 790px); height: min(84vmin, 790px); transform: translate(-50%, -50%) scale(calc(1 + var(--pb-scroll) * .6)); will-change: transform; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,44,.29), rgba(255,107,44,.08) 39%, transparent 67%); filter: blur(10px); }
+.pb-hero-word { position: absolute; z-index: 1; left: 0; right: 0; top: 47%; transform: translateY(calc(-54% + var(--pb-scroll) * 36px)); opacity: calc(1 - var(--pb-scroll) * .42); color: transparent; font-size: clamp(7rem, 16vw, 16rem); font-weight: 900; letter-spacing: -.07em; line-height: 1; text-align: center; -webkit-text-stroke: 1.4px rgba(245,230,204,.29); user-select: none; }
+.pb-cup { position: absolute; z-index: 5; left: 50%; top: 47%; width: min(34vw, 380px); aspect-ratio: 1; transform: translate(-50%, calc(-50% - var(--pb-scroll) * 42px)) scale(calc(1 + var(--pb-scroll) * .32)); will-change: transform; filter: drop-shadow(0 34px 38px rgba(0,0,0,.6)); }
+.pb-cup-shadow { position: absolute; inset: 11% -5% -13% 8%; border-radius: 50%; background: radial-gradient(circle, rgba(0,0,0,.85), transparent 68%); filter: blur(18px); }
+.pb-cup-image { position: absolute; inset: 0; overflow: hidden; border-radius: 50%; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 50px 90px -30px rgba(0,0,0,.9); background: #2b1208; }
+.pb-cup-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.035); transition: opacity .55s ease, transform .85s cubic-bezier(.16,1,.3,1); animation: pb-cup-turn 24s linear infinite; }
+.pb-cup-image--ready img { opacity: 1; transform: scale(1); }
+.pb-cup-image::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(70% 55% at 30% 18%, rgba(255,255,255,.22), transparent 55%), radial-gradient(circle, transparent 62%, rgba(0,0,0,.55) 100%); }
+.pb-cup-ring { position: absolute; z-index: 1; inset: -15%; width: 130%; height: 130%; animation: pb-ring-turn 34s linear infinite; }
+.pb-cup-ring text { fill: rgba(245,230,204,.7); font-family: var(--font-sans); font-size: 10.5px; font-weight: 800; letter-spacing: .34em; }
+.pb-steam { position: absolute; z-index: 6; left: 50%; top: 47%; width: min(25vw, 255px); height: min(44vw, 420px); transform: translate(-50%, -94%); pointer-events: none; mix-blend-mode: screen; }
+.pb-steam path { fill: none; stroke: url(#pbSteam); stroke-linecap: round; stroke-width: 10; filter: blur(5px); animation: pb-steam 5.5s ease-in-out infinite; opacity: 0; }
+.pb-steam path:nth-child(3) { animation-delay: 1.8s; stroke-width: 7; }.pb-steam path:nth-child(4) { animation-delay: 3.6s; stroke-width: 12; }
+.pb-can { position: absolute; z-index: 7; left: 50%; top: 47%; width: min(12vw, 118px); margin-left: min(16vw, 175px); margin-top: min(1vw, 9px); filter: drop-shadow(-20px 28px 24px rgba(0,0,0,.72)); transform: translate3d(calc(var(--pb-scroll) * 16vw), calc(var(--pb-scroll) * -42vh), 0) rotate(calc(12deg + var(--pb-scroll) * 60deg)); will-change: transform; }.pb-can svg { display: block; width: 100%; height: auto; }
+.pb-beans { position: absolute; inset: 0; z-index: 4; pointer-events: none; transform: scale(calc(1 + var(--pb-scroll) * .7)) translateY(calc(var(--pb-scroll) * -54px)); will-change: transform; }.pb-bean { position: absolute; display: block; border-radius: 50%; background: radial-gradient(ellipse at 32% 22%, #b67040, #4a210e 57%, #160906 100%); box-shadow: inset -4px -5px 7px rgba(0,0,0,.48), 0 12px 19px rgba(0,0,0,.45); transform: rotate(var(--bean-rotate)); animation: pb-bean-float 6s ease-in-out var(--bean-delay) infinite alternate; }.pb-bean::after { content: ''; position: absolute; left: 47%; top: 10%; bottom: 10%; width: 7%; border-radius: 99px; background: rgba(19,6,3,.72); box-shadow: 1px 0 1px rgba(255,174,109,.25); }.pb-bean--back { z-index: 1; opacity: .45; filter: blur(2px); }.pb-bean--mid { z-index: 3; }.pb-bean--front { z-index: 7; filter: blur(1.3px); }
+.pb-scroll-top { transform: translateY(calc(var(--pb-scroll) * -45px)); opacity: max(0, calc(1 - var(--pb-scroll) * 2.2)); will-change: transform, opacity; }.pb-scroll-copy { transform: translateY(calc(var(--pb-scroll) * -160px)); opacity: max(0, calc(1 - var(--pb-scroll) * 1.45)); will-change: transform, opacity; }.pb-scroll-side { transform: translateY(calc(var(--pb-scroll) * -110px)); opacity: max(0, calc(1 - var(--pb-scroll) * 1.7)); will-change: transform, opacity; }
+@keyframes pb-bean-float { from { transform: translateY(-10px) rotate(var(--bean-rotate)); } to { transform: translateY(11px) rotate(calc(var(--bean-rotate) + 13deg)); } } @keyframes pb-ring-turn { to { transform: rotate(360deg); } } @keyframes pb-cup-turn { to { transform: rotate(360deg); } } @keyframes pb-steam { 0% { opacity: 0; transform: translateY(60px) scaleY(.7); } 30% { opacity: .72; } 100% { opacity: 0; transform: translateY(-50px) scaleY(1.15); } }
+.pb-hero:not(.pb-hero--active) .pb-cup-image img, .pb-hero:not(.pb-hero--active) .pb-cup-ring, .pb-hero:not(.pb-hero--active) .pb-steam path, .pb-hero:not(.pb-hero--active) .pb-bean { animation-play-state: paused; }
+@media (max-width: 639px) { .pb-hero-word { top: 36%; font-size: 19vw; }.pb-cup { top: 38%; width: min(61vw, 290px); transform: translate(-50%, -50%) scale(calc(1 + var(--pb-scroll) * .08)); filter: drop-shadow(0 18px 20px rgba(0,0,0,.46)); }.pb-steam { top: 38%; width: 46vw; height: 72vw; }.pb-steam path { filter: none; opacity: .42; }.pb-hero-glow { filter: none; opacity: .72; }.pb-cup-shadow { filter: none; opacity: .65; }.pb-can { display: none; }.pb-bean--back { opacity: .28; filter: none; }.pb-bean--mid:nth-child(n+7), .pb-bean--front { display: none; } }
+@media (prefers-reduced-motion: reduce) { .viewport-reveal { content-visibility: visible; opacity: 1; transform: none; transition: none; }.pb-cup-image img { animation: none; opacity: 1; transform: none; } }
 
 /* Hero Stage Motion: orbit ring + breathing spotlight */
 @keyframes heroOrbitSpin {
@@ -349,6 +434,11 @@ body {
   animation-direction: reverse !important;
 }
 
+/* Explicit marquee controls: kept outside Tailwind arbitrary variants so both
+   direction and hover-pause stay reliable in the production CSS build. */
+.marquee-track--reverse { animation-direction: reverse !important; }
+.group:hover .marquee-track--pausable { animation-play-state: paused !important; }
+
 /* ── Performance Optimizations (60 FPS Butter-Smooth Scrolling) ── */
 html {
   scroll-behavior: smooth;
@@ -369,10 +459,72 @@ img {
   content-visibility: auto;
 }
 
+/* Filters repaint large areas while an element is moving. Preserve the visual
+   hierarchy, but use the cheaper shadow treatment on compact/touch devices. */
+@media (max-width: 1023px), (pointer: coarse) {
+  .pb-cup { filter: none; }
+  .pb-cup-shadow { filter: none; }
+  .pb-hero-glow { filter: none; }
+  .pb-steam { mix-blend-mode: normal; opacity: .68; }
+}
+
+/* Below-the-fold sections do not need paint work until they approach the viewport. */
+main > section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 /* Skip painting for the static footer until it is scrolled into view */
 footer {
   content-visibility: auto;
   contain-intrinsic-size: auto 640px;
+}
+
+/* How About Coffee — Phase 1 brand palette */
+:root {
+  --color-brand-primary: #4A2416;
+  --color-brand-primary-hover: #35180E;
+  --color-brand-primary-light: #74402C;
+  --color-brand-accent: #C65D2E;
+  --color-brand-surface-tint: #F5E9DB;
+  --color-bg-page: #FFF9EF;
+  --color-bg-subtle: #F4EBDD;
+  --color-nav-bg: rgba(255, 249, 239, 0.94);
+  --color-text-primary: #25150F;
+  --color-text-secondary: #665047;
+  --color-text-tertiary: #8C7569;
+  --color-focus-ring: #9A3F21;
+  --color-focus-offset: #FFF9EF;
+  --color-btn-primary-bg: #4A2416;
+  --color-btn-primary-hover: #35180E;
+  --color-btn-secondary-text: #25150F;
+}
+
+[data-theme="dark"], .dark {
+  --color-brand-primary: #E9A477;
+  --color-brand-primary-hover: #F0B58D;
+  --color-brand-primary-light: #C9784B;
+  --color-brand-accent: #F09A5B;
+  --color-brand-surface-tint: #352117;
+  --color-bg-page: #160E0A;
+  --color-bg-surface: #21150F;
+  --color-bg-elevated: #2A1B14;
+  --color-bg-subtle: #2B1C15;
+  --color-nav-bg: rgba(22, 14, 10, 0.94);
+  --color-text-primary: #FFF7E9;
+  --color-text-secondary: #CDB9AB;
+  --color-text-tertiary: #9F8779;
+}
+
+.hac-logo-mark {
+  color: var(--color-brand-primary);
+  filter: drop-shadow(0 8px 12px rgba(74, 36, 22, 0.16));
+  transition: transform 280ms ease, filter 280ms ease;
+}
+
+.hac-logo:hover .hac-logo-mark {
+  transform: translateY(-2px) rotate(-2deg);
+  filter: drop-shadow(0 10px 15px rgba(74, 36, 22, 0.24));
 }
 
 /* Respect the visitor's motion preference (also keeps low-end devices snappy) */

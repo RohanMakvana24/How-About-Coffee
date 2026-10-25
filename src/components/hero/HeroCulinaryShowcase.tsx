@@ -7,7 +7,7 @@ import { buildAvifSrcSet, buildSrcSet } from '../../lib/imageSrcSet';
  * Provides a rich, appetizing culinary visual composition for the hero section.
  * Upgraded with:
  * - High-resolution commercial cafe dining spread photography
- * - Tabletop tent card displaying exact text "FOOGLE" naturally placed beside the food
+ * - Tabletop tent card displaying exact text "HOW ABOUT COFFEE" naturally placed beside the food
  * - Resilient layered vector artwork fallback
  * - Secondary artisanal beverage showcase card with photography
  */
@@ -54,7 +54,7 @@ export const HeroCulinaryShowcase: React.FC = () => {
                 src={heroImageUrl}
                 srcSet={buildSrcSet(heroImageUrl)}
                 sizes="(max-width: 640px) 100vw, 560px"
-                alt="Artisanal cafe spread with woodfired pizza, fresh burrata, and gourmet pasta on rustic tabletop with Foogle brand card"
+                alt="Artisanal cafe spread with woodfired pizza, fresh burrata, and gourmet pasta on rustic tabletop with How About Coffee brand card"
                 referrerPolicy="no-referrer"
                 loading="eager"
                 decoding="async"
@@ -136,7 +136,7 @@ export const HeroCulinaryShowcase: React.FC = () => {
             aria-hidden="true"
           />
 
-          {/* Tabletop Brand Card "FOOGLE" standing naturally beside the spread */}
+          {/* Tabletop Brand Card "HOW ABOUT COFFEE" standing naturally beside the spread */}
           <TabletopBrandCard
             placement="bottom-right"
             size="md"
@@ -149,7 +149,7 @@ export const HeroCulinaryShowcase: React.FC = () => {
               Artisanal Woodfired &amp; Fresh Cafe Fare
             </span>
             <span className="text-[11px] text-white/80 font-medium">
-              Panchwati, Udaipur · Foogle Kitchen
+              Jagatpura, Jaipur · How About Coffee Kitchen
             </span>
           </div>
         </div>
@@ -236,7 +236,7 @@ export const HeroCulinaryShowcase: React.FC = () => {
           style={{ backgroundColor: 'var(--color-accent-green)' }}
           aria-hidden="true"
         />
-        <span>Handcrafted Daily in Udaipur</span>
+        <span>Handcrafted Daily in Jaipur</span>
       </div>
     </div>
   );

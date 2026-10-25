@@ -1,168 +1,83 @@
 import React from 'react';
-import { FoodDoodleLogo } from './FoodDoodleLogo';
 
 export interface BrandLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showSubtitle?: boolean;
   variant?: 'animated-doodle' | 'badge-image' | 'classic';
+  inverse?: boolean;
   className?: string;
   onClick?: () => void;
 }
 
-/**
- * Foogle Brand Logo Lockup
- * - 'animated-doodle' (default): Custom animated vector food-letters inspired by the authentic
- *   Foogle cafe emblem (Fork, Tomato, Pizza, Coffee Cup, Ice Cream Cone, Croissant + Tagline Ribbon).
- * - 'badge-image': Displays the official high-resolution restaurant emblem PNG.
- * - 'classic': Original minimal culinary emblem with 4 accent pips.
- */
+/** Compact single-line How About Coffee lockup. */
 export const BrandLogo: React.FC<BrandLogoProps> = ({
   size = 'md',
   showSubtitle = true,
-  variant = 'animated-doodle',
   className = '',
   onClick,
+  inverse = false,
 }) => {
-  // 1. Official Badge Image
-  if (variant === 'badge-image') {
-    const imgHeight = {
-      sm: 'h-8',
-      md: 'h-11',
-      lg: 'h-14',
-      xl: 'h-18',
-    }[size];
-
-    return (
-      <div
-        className={`inline-flex items-center select-none cursor-pointer group ${className}`}
-        onClick={onClick}
-        aria-label="Foogle Cafe & Restaurant"
-      >
-        <img
-          src="/assets/aistudio/image_0f6dabd4.png"
-          alt="Foogle Cafe Official Logo"
-          decoding="async"
-          className={`${imgHeight} w-auto object-contain transition-transform duration-300 group-hover:scale-105`}
-        />
-      </div>
-    );
-  }
-
-  // 2. Animated Food-Doodle Logo (Default)
-  if (variant === 'animated-doodle') {
-    return (
-      <FoodDoodleLogo
-        size={size}
-        showTagline={showSubtitle}
-        animated={true}
-        className={className}
-        onClick={onClick}
-      />
-    );
-  }
-
-  // 3. Classic Minimalist Fallback
-  const sizeClasses = {
-    sm: {
-      mark: 'w-6 h-6',
-      text: 'text-lg',
-      sub: 'text-[9px]',
-      gap: 'gap-2',
-      dot: 'w-1 h-1',
-    },
-    md: {
-      mark: 'w-8 h-8',
-      text: 'text-2xl',
-      sub: 'text-[10px]',
-      gap: 'gap-2.5',
-      dot: 'w-1.5 h-1.5',
-    },
-    lg: {
-      mark: 'w-10 h-10',
-      text: 'text-3xl',
-      sub: 'text-xs',
-      gap: 'gap-3',
-      dot: 'w-2 h-2',
-    },
-    xl: {
-      mark: 'w-12 h-12',
-      text: 'text-4xl',
-      sub: 'text-sm',
-      gap: 'gap-3.5',
-      dot: 'w-2.5 h-2.5',
-    },
+  const sizes = {
+    sm: { mark: 'h-8 w-8', title: 'text-[11px]', sub: 'text-[6px]', gap: 'gap-1.5', rule: 'w-3' },
+    md: { mark: 'h-10 w-10', title: 'text-[14px]', sub: 'text-[7px]', gap: 'gap-2', rule: 'w-4' },
+    lg: { mark: 'h-12 w-12', title: 'text-[17px]', sub: 'text-[8px]', gap: 'gap-2.5', rule: 'w-5' },
+    xl: { mark: 'h-16 w-16', title: 'text-2xl', sub: 'text-[10px]', gap: 'gap-3', rule: 'w-6' },
   }[size];
 
   return (
     <div
-      className={`inline-flex items-center ${sizeClasses.gap} select-none ${className}`}
+      className={`hac-logo inline-flex items-center ${sizes.gap} select-none ${className}`}
       onClick={onClick}
-      aria-label="Foogle Cafe and Restaurant"
+      aria-label="How About Coffee, Jagatpura Jaipur"
     >
-      <div
-        className={`relative flex items-center justify-center shrink-0 rounded-lg ${sizeClasses.mark}`}
-        style={{
-          background: 'var(--color-brand-primary)',
-          color: '#FAF8F5',
-        }}
-        aria-hidden="true"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4/5 h-4/5"
-        >
-          <path d="M4 17h16" />
-          <path d="M12 5v2" />
-          <path d="M5 17c0-4 3-7 7-7s7 3 7 7" />
-          <path d="M9 17v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1" />
+      <style>{`
+        @keyframes hac-logo-steam {
+          0%, 100% { opacity: .35; transform: translateY(2px); }
+          50% { opacity: 1; transform: translateY(-2px); }
+        }
+        @keyframes hac-logo-bob {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-1px) rotate(-1deg); }
+        }
+        @keyframes hac-word-glow {
+          0%, 100% { text-shadow: 0 0 0 rgba(198, 93, 46, 0); }
+          50% { text-shadow: 0 0 12px rgba(198, 93, 46, .22); }
+        }
+        .hac-logo-mark { animation: hac-logo-bob 4s ease-in-out infinite; }
+        .hac-logo-steam { animation: hac-logo-steam 2.2s ease-in-out infinite; transform-origin: center; }
+        .hac-logo-wordmark { animation: hac-word-glow 3.8s ease-in-out infinite; }
+        .hac-logo-steam:nth-of-type(2) { animation-delay: .35s; }
+        .hac-logo-steam:nth-of-type(3) { animation-delay: .7s; }
+        .hac-logo:hover .hac-logo-mark { animation-duration: 1.2s; transform: translateY(-2px) rotate(-3deg); }
+        .hac-logo:hover .hac-logo-wordmark { text-shadow: 0 0 15px rgba(198, 93, 46, .32); }
+        @media (prefers-reduced-motion: reduce) {
+          .hac-logo-mark, .hac-logo-steam, .hac-logo-wordmark { animation: none !important; }
+        }
+      `}</style>
+
+      <span className={`hac-logo-mark ${sizes.mark} relative shrink-0 rounded-[13px]`} aria-hidden="true">
+        <svg viewBox="0 0 64 64" className="h-full w-full" fill="none">
+          <rect x="1" y="1" width="62" height="62" rx="15" fill="currentColor" />
+          <path className="hac-logo-steam" d="M24 24c-2.5-3.2 2.5-4.4 0-8" stroke="#FFF7E9" strokeWidth="2.4" strokeLinecap="round" />
+          <path className="hac-logo-steam" d="M31 24c-2.5-3.2 2.5-4.4 0-8" stroke="#FFF7E9" strokeWidth="2.4" strokeLinecap="round" />
+          <path className="hac-logo-steam" d="M38 24c-2.5-3.2 2.5-4.4 0-8" stroke="#FFF7E9" strokeWidth="2.4" strokeLinecap="round" />
+          <path d="M18 29h25v7.5C43 44.8 37.7 49 30.5 49S18 44.8 18 36.5V29Z" stroke="#FFF7E9" strokeWidth="2.8" strokeLinejoin="round" />
+          <path d="M43 32h3a5.5 5.5 0 0 1 0 11h-3" stroke="#FFF7E9" strokeWidth="2.8" strokeLinecap="round" />
+          <text x="30.5" y="39.5" textAnchor="middle" fill="#FFF7E9" fontSize="7.5" fontWeight="900" letterSpacing="-.4" fontFamily="Arial, sans-serif">HAC</text>
         </svg>
-      </div>
+      </span>
 
-      <div className="flex flex-col">
-        <div className="flex items-baseline gap-1.5 leading-none">
-          <span
-            className={`font-extrabold tracking-tight ${sizeClasses.text}`}
-            style={{
-              color: 'var(--color-text-primary)',
-              letterSpacing: '-0.03em',
-            }}
-          >
-            Foogle
-          </span>
-          <span className="inline-flex items-center gap-0.5 ml-0.5" aria-hidden="true">
-            <span
-              className={`rounded-full ${sizeClasses.dot}`}
-              style={{ backgroundColor: 'var(--color-accent-blue)' }}
-            />
-            <span
-              className={`rounded-full ${sizeClasses.dot}`}
-              style={{ backgroundColor: 'var(--color-accent-red)' }}
-            />
-            <span
-              className={`rounded-full ${sizeClasses.dot}`}
-              style={{ backgroundColor: 'var(--color-accent-yellow)' }}
-            />
-            <span
-              className={`rounded-full ${sizeClasses.dot}`}
-              style={{ backgroundColor: 'var(--color-accent-green)' }}
-            />
-          </span>
-        </div>
-
+      <span className="flex min-w-0 flex-col leading-none">
+        <span className={`hac-logo-wordmark ${sizes.title} whitespace-nowrap font-black uppercase tracking-[0.12em]`} style={{ color: inverse ? '#fff7ec' : 'var(--color-text-primary)' }}>
+          How About Coffee
+        </span>
         {showSubtitle && (
-          <span
-            className={`font-semibold tracking-wider uppercase mt-1 ${sizeClasses.sub}`}
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
-            Cafe &amp; Restaurant · Udaipur
+          <span className={`${sizes.sub} mt-1 whitespace-nowrap font-bold uppercase tracking-[0.24em]`} style={{ color: inverse ? 'rgba(255,247,236,.65)' : 'var(--color-text-tertiary)' }}>
+            Brew · Bite · Belong
           </span>
         )}
-      </div>
+      </span>
+
     </div>
   );
 };

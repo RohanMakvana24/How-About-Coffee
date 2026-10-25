@@ -1,279 +1,95 @@
-import React, { useState, useMemo } from 'react';
-import { Container } from '../common/Container';
-import { SectionHeading } from '../common/SectionHeading';
-import { MenuCategories } from './MenuCategories';
-import { MenuCard } from './MenuCard';
-import { CoverflowCarousel, CoverflowSlide } from '@/components/ui/coverflow-carousel';
+import React, { useMemo, useState } from 'react';
+import { ArrowRight, Check, Coffee, Info, Plus, Sparkles } from 'lucide-react';
 import { MENU_CATEGORIES, MENU_ITEMS } from '../../data/menuData';
 import { MenuCategoryId } from '../../types/menu';
-import { Sparkles, Info, ArrowRight, HandMetal, Smartphone, Plus, Check } from 'lucide-react';
+import { MenuCard } from './MenuCard';
+import { CoverflowCarousel } from '../../../components/ui/coverflow-carousel';
 import { useCart } from '../../context/CartContext';
 
-const CATEGORY_DEFAULT_PRICES: Record<string, number> = {
-  pizza: 279,
-  sandwiches: 189,
-  pasta: 249,
-  'sides-snacks': 159,
-  'cafe-specials': 219,
-  desserts: 199,
-};
-
-
 export const MenuSection: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<MenuCategoryId>('all');
+  const [active, setActive] = useState<MenuCategoryId>('all');
+  const [addedItem, setAddedItem] = useState<string | null>(null);
   const { addItem } = useCart();
-  const [justAddedId, setJustAddedId] = useState<string | null>(null);
+  const filtered = useMemo(() => active === 'all' ? MENU_ITEMS : MENU_ITEMS.filter((item) => item.categoryId === active), [active]);
 
-  const handleAddSlideToCart = (item: any) => {
-    const numericPrice = item.price
-      ? parseInt(item.price.replace(/\D/g, ''), 10) || 249
-      : CATEGORY_DEFAULT_PRICES[item.categoryId] || 229;
-
+  const addToTray = (index: number) => {
+    const item = filtered[index];
+    if (!item) return;
     addItem({
       id: item.id,
       name: item.name,
-      price: numericPrice,
+      price: Number(item.price?.replace(/\D/g, '')) || 0,
       category: item.categoryLabel,
       description: item.description,
       imageUrl: item.imageUrl,
     });
-    setJustAddedId(item.id);
-    setTimeout(() => setJustAddedId(null), 1600);
+    setAddedItem(item.id);
+    window.setTimeout(() => setAddedItem(null), 1400);
   };
 
-  // Compute item counts for each category
-  const itemCounts = useMemo(() => {
-    const counts: Record<MenuCategoryId, number> = {
-      all: MENU_ITEMS.length,
-      pizza: 0,
-      sandwiches: 0,
-      pasta: 0,
-      'sides-snacks': 0,
-      'cafe-specials': 0,
-      desserts: 0,
-    };
-
-    MENU_ITEMS.forEach((item) => {
-      counts[item.categoryId] = (counts[item.categoryId] || 0) + 1;
-    });
-
-    return counts;
-  }, []);
-
-  // Filter items based on active category
-  const filteredItems = useMemo(() => {
-    if (activeCategory === 'all') {
-      return MENU_ITEMS;
-    }
-    return MENU_ITEMS.filter((item) => item.categoryId === activeCategory);
-  }, [activeCategory]);
-
-  // Convert filtered items to Coverflow slides for interactive mobile carousel
-  const coverflowSlides = useMemo<CoverflowSlide[]>(() => {
-    return filteredItems.map((item) => {
-      const numericPrice = item.price
-        ? parseInt(item.price.replace(/\D/g, ''), 10) || 249
-        : CATEGORY_DEFAULT_PRICES[item.categoryId] || 229;
-      return {
-        src: item.imageUrl || '/images/photos/woodfired-pizza.webp',
-        alt: item.name,
-        title: item.name,
-        subtitle: item.description,
-        price: '₹' + numericPrice,
-        tag: item.categoryLabel,
-        meta: [
-          { label: 'Category', value: item.categoryLabel },
-          { label: 'Crafted In', value: 'Panchwati, Udaipur' },
-        ],
-        isVeg: true,
-      };
-    });
-  }, [filteredItems]);
-
   return (
-    <section
-      id="menu"
-      aria-labelledby="menu-main-heading"
-      className="py-14 sm:py-20 border-t scroll-mt-20 transition-colors duration-200"
-      style={{
-        backgroundColor: 'var(--color-bg-page)',
-        borderColor: 'var(--color-border-subtle)',
-      }}
-    >
-      <Container>
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
-          <div>
-            <SectionHeading
-              eyebrow="MADE FOR YOUR CRAVINGS"
-              title="Explore Our Menu"
-              description="From comforting classics to exciting cafe favourites, find something you'll love."
-              titleLevel="h2"
-            />
+    <section id="menu" className="scroll-mt-20 border-t py-16 sm:py-24" style={{ background: 'var(--color-bg-page)', borderColor: 'var(--color-border-subtle)' }}>
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="mb-3 flex items-center gap-2 text-[10px] font-black uppercase tracking-[.24em]" style={{ color: 'var(--color-brand-accent)' }}><Coffee className="h-4 w-4" /> Brewed & made fresh</p>
+            <h2 className="text-4xl font-black tracking-[-.04em] sm:text-6xl" style={{ color: 'var(--color-text-primary)' }}>Cravings, meet<br /><span className="italic" style={{ color: 'var(--color-brand-primary)' }}>your favourites.</span></h2>
+            <p className="mt-5 text-base leading-7" style={{ color: 'var(--color-text-secondary)' }}>From espresso classics and chilled brews to loaded bites and something sweet—there is always a good reason to stay a little longer.</p>
           </div>
-
-          {/* Quick Stats / Active Category Indicator */}
-          <div
-            className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border self-start md:self-auto shrink-0"
-            style={{
-              backgroundColor: 'var(--color-bg-surface)',
-              borderColor: 'var(--color-border)',
-              color: 'var(--color-text-secondary)',
-            }}
-          >
-            <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--color-brand-primary)' }} />
-            <span>
-              Showing {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'}
-            </span>
-          </div>
+          <div className="inline-flex self-start items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold" style={{ background: 'var(--color-bg-surface)', borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}><Sparkles className="h-4 w-4" style={{ color: 'var(--color-brand-accent)' }} /> {filtered.length} items to explore</div>
         </div>
 
-        {/* Category Navigation Bar */}
-        <div className="mb-8">
-          <MenuCategories
-            categories={MENU_CATEGORIES}
-            activeCategory={activeCategory}
-            onSelectCategory={setActiveCategory}
-            itemCounts={itemCounts}
-          />
+        <div className="mt-10 flex gap-2 overflow-x-auto pb-3 [scrollbar-width:none]" role="tablist" aria-label="Menu categories">
+          {MENU_CATEGORIES.map((category) => {
+            const selected = active === category.id;
+            return <button key={category.id} role="tab" aria-selected={selected} onClick={() => setActive(category.id)} className="shrink-0 cursor-pointer rounded-full border px-4 py-2.5 text-xs font-black transition-all" style={{ background: selected ? 'var(--color-brand-primary)' : 'var(--color-bg-surface)', color: selected ? '#fff' : 'var(--color-text-secondary)', borderColor: selected ? 'var(--color-brand-primary)' : 'var(--color-border)' }}>{category.label}</button>;
+          })}
         </div>
 
-        {/* MOBILE VIEW ONLY: 3D Coverflow Carousel (Eliminates excessive vertical scrolling) */}
-        <div className="block sm:hidden mb-6">
-          <div className="mb-2 flex items-center justify-between px-1 text-[11px] text-zinc-500 font-medium">
-            <span className="flex items-center gap-1 text-amber-700 dark:text-amber-300 font-semibold">
-              <Smartphone className="w-3 h-3" />
-              Swipe To Browse
-            </span>
-            <span>Explore dishes</span>
-          </div>
-
+        {/* Mobile keeps the whole menu reachable without a long stack of cards. */}
+        <div className="mt-4 md:hidden" aria-live="polite">
+          <p className="mb-1 text-center text-[10px] font-black uppercase tracking-[.18em]" style={{ color: 'var(--color-text-secondary)' }}>Swipe to browse</p>
           <CoverflowCarousel
-            key={activeCategory}
-            slides={coverflowSlides}
-            showCaption={true}
-            showNavigation={true}
-            showPagination={true}
-            cardWidth="clamp(210px, 66vw, 270px)"
-            className="pb-2"
-            renderAction={(activeSlide, index) => {
-              const currentItem = filteredItems[index];
-              if (!currentItem) return null;
-              const isAdded = justAddedId === currentItem.id;
+            key={active}
+            slides={filtered.map((item) => ({ src: item.imageUrl ?? '/images/photos/food-fallback.webp', alt: item.name, title: item.name, subtitle: item.description, price: item.price, isVeg: item.dietary === 'veg' }))}
+            label="Menu items"
+            cardWidth="clamp(220px, 68vw, 280px)"
+            rotate={38}
+            depth={0.42}
+            perspective={2.5}
+            gap={0.03}
+            fade={0.17}
+            showCaption
+            showNavigation
+            renderAction={(_, index) => {
+              const item = filtered[index];
+              const added = addedItem === item?.id;
               return (
                 <button
                   type="button"
-                  onClick={() => handleAddSlideToCart(currentItem)}
-                  aria-label={`Add ${currentItem.name} to order tray`}
-                  className={`inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer shadow-md active:scale-95 ${
-                    isAdded
-                      ? 'bg-emerald-600 text-white scale-105'
-                      : 'bg-amber-500 hover:bg-amber-400 text-black'
-                  }`}
+                  onClick={(event) => { event.stopPropagation(); addToTray(index); }}
+                  className={`inline-flex w-full max-w-[260px] cursor-pointer items-center justify-center gap-2 rounded-full py-3 text-xs font-black transition-all ${added ? 'bg-emerald-600 text-white' : 'text-white hover:opacity-90'}`}
+                  style={added ? undefined : { background: 'var(--color-brand-primary)' }}
                 >
-                  {isAdded ? (
-                    <>
-                      <Check className="w-4 h-4" />
-                      <span>Added to Tray ✓</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-4 h-4 stroke-[2.5]" />
-                      <span>Add to Tray</span>
-                    </>
-                  )}
+                  {added ? <><Check className="h-4 w-4" /> Added to tray</> : <><Plus className="h-4 w-4" /> Add to order</>}
                 </button>
               );
             }}
           />
         </div>
 
-        {/* Scroll-Driven Animation Style Injection for Desktop Grid */}
-        <style>{`
-          @keyframes menu-slide-in {
-            from {
-              opacity: 0;
-              transform: scale(0.9) translateY(24px) rotate(calc(var(--side, 1) * (3deg * var(--amp, 1))));
-            }
-            to {
-              opacity: 1;
-              transform: scale(1) translateY(0) rotate(0deg);
-            }
-          }
-
-          .menu-card-scroll-wrapper {
-            &:nth-of-type(2n + 1) { transform-origin: 25vw 100%; }
-            &:nth-of-type(2n) { transform-origin: -25vw 100%; }
-
-            @media (min-width: 768px) {
-              &:nth-of-type(3n + 1) { transform-origin: 33vw 100%; }
-              &:nth-of-type(3n + 2) { transform-origin: 0 100%; }
-              &:nth-of-type(3n) { transform-origin: -33vw 100%; }
-            }
-
-            @media (prefers-reduced-motion: no-preference) {
-              animation: menu-slide-in linear both;
-              animation-timeline: view();
-              animation-range: entry 0% cover 20%;
-            }
-          }
-        `}</style>
-
-        {/* DESKTOP & TABLET VIEW ONLY: Responsive Food Cards Bento Grid */}
-        <div
-          id="menu-items-grid"
-          role="region"
-          aria-label="Menu Items List"
-          className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-        >
-          {filteredItems.map((item, index) => (
-            <MenuCard
-              key={item.id}
-              item={item}
-              className="menu-card-scroll-wrapper"
-              style={
-                {
-                  '--side': index % 2 === 0 ? 1 : -1,
-                  '--amp': Math.max(1, index % 3),
-                } as React.CSSProperties
-              }
-            />
-          ))}
+        <div className="mt-6 hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-3" aria-live="polite">
+          {filtered.map((item) => <MenuCard key={item.id} item={item} />)}
         </div>
 
-        {/* Informative Disclaimer Banner (Phase 3 Owner Confirmation Note) */}
-        <div
-          className="mt-12 sm:mt-14 p-5 sm:p-6 rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-          style={{
-            backgroundColor: 'var(--color-bg-surface)',
-            borderColor: 'var(--color-border)',
-          }}
-        >
-          <div className="flex items-start gap-3">
-            <Info className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--color-brand-primary)' }} />
-            <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-              Provisional menu selection for Foogle in Panchwati, Udaipur.
-              Official dishes, pricing, and daily specials are subject to final confirmation with restaurant management.
-            </p>
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-3xl border p-5 sm:flex-row sm:items-center sm:p-6" style={{ background: 'var(--color-brand-surface-tint)', borderColor: 'var(--color-border)' }}>
+          <div className="flex max-w-3xl items-start gap-3">
+            <Info className="mt-0.5 h-4 w-4 shrink-0" style={{ color: 'var(--color-brand-accent)' }} />
+            <p className="text-xs leading-5" style={{ color: 'var(--color-text-secondary)' }}>Demo selection based on current public ordering listings. Prices and availability can change; the café's final menu will be confirmed before launch. Photos are representative.</p>
           </div>
-
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              const contactSection = document.querySelector('#contact');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="inline-flex items-center gap-1.5 text-xs font-bold whitespace-nowrap shrink-0 hover:underline focus-visible:outline-2 rounded"
-            style={{ color: 'var(--color-brand-primary)' }}
-          >
-            <span>Visit Us in Panchwati</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          <a href="#contact" className="inline-flex shrink-0 items-center gap-2 text-xs font-black" style={{ color: 'var(--color-brand-primary)' }}>Plan your visit <ArrowRight className="h-4 w-4" /></a>
         </div>
-      </Container>
+      </div>
     </section>
   );
 };

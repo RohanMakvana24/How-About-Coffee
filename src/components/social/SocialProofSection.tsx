@@ -71,18 +71,18 @@ const STORIES: Record<string, ChannelStory> = {
   google: {
     id: 'google',
     name: 'Google Reviews',
-    handle: 'Foogle Cafe & Restaurant',
-    badgeTag: 'Verified Diner Review',
+    handle: 'How About Coffee',
+    badgeTag: 'Verified Café Review',
     ratingOrStat: '4.9 ★★★★★',
     statLabel: '2,480+ Reviews on Google',
     quote:
-      'Best woodfired pizza in Udaipur! The sourdough crust has the perfect airy crumb and authentic leopard spotting. The courtyard garden atmosphere is absolutely magical.',
+      'Amazing coffee, relaxed vibe, and a comfortable Jaipur café stop for all-day conversations and quick bites.',
     author: 'Aarav Sharma',
     avatar: '/images/photos/avatar-1.webp',
     role: 'Local Guide Level 7 · 142 reviews',
     timeAgo: '2 days ago',
     helpfulCount: '48 found helpful',
-    tag: 'Woodfired Pizza · Cold Brew · Tiramisu',
+    tag: 'Coffee · Sandwiches · Desserts',
     ctaText: 'Read All 2.4K Google Reviews',
     ctaHref: 'https://maps.google.com',
     accentColor: '#4285F4',
@@ -92,18 +92,18 @@ const STORIES: Record<string, ChannelStory> = {
   instagram: {
     id: 'instagram',
     name: 'Instagram Stories',
-    handle: '@fooglecafe',
-    badgeTag: 'Courtyard Reels & Snaps',
+    handle: '@howaboutcoffee',
+    badgeTag: 'Cafe Reels & Snaps',
     ratingOrStat: '18.5K Followers',
-    statLabel: 'Daily Pizza & Latte Stories',
+    statLabel: 'Daily Coffee & Food Stories',
     quote:
-      'Golden hour in the sun-drenched courtyard with sourdough margherita and iced espresso tonic. Udaipur’s coziest artisan cafe aesthetic.',
+      'Golden hour coffee run at How About Coffee in Jagatpura, Jaipur — warm lights, fresh bites, and the perfect café mood.',
     author: 'Priya Mehra',
     avatar: '/images/photos/avatar-2.webp',
     role: '@priya_wanderlust · Food & Travel Creator',
     timeAgo: 'Yesterday',
     helpfulCount: '2.4K likes · 240 shares',
-    tag: 'Aesthetic Courtyard · Golden Hour',
+    tag: 'Café Vibes · Golden Hour',
     ctaText: 'Follow on Instagram',
     ctaHref: 'https://instagram.com',
     accentColor: '#E1306C',
@@ -113,18 +113,18 @@ const STORIES: Record<string, ChannelStory> = {
   facebook: {
     id: 'facebook',
     name: 'Facebook Community',
-    handle: 'Foogle Cafe Udaipur',
+    handle: 'How About Coffee Jaipur',
     badgeTag: 'Community Recommendation',
     ratingOrStat: '99% Recommended',
     statLabel: '14,000+ Guests & Likes',
     quote:
-      'Hosted our family anniversary dinner in the courtyard garden. Warm hospitality, live acoustic weekend vibe, and phenomenal artisanal pastas.',
+      'Great café spot in Jagatpura for coffee, snacks, and relaxed evenings with friends and family.',
     author: 'Vikram & Meera Rajput',
     avatar: '/images/photos/avatar-3.webp',
-    role: 'Udaipur Diners · Verified Recommendation',
+    role: 'Jaipur Diners · Verified Recommendation',
     timeAgo: '4 days ago',
     helpfulCount: '98% recommend to friends',
-    tag: 'Family Dining · Acoustic Weekends',
+    tag: 'Coffee Dates · Casual Dining',
     ctaText: 'View Facebook Page',
     ctaHref: 'https://facebook.com',
     accentColor: '#1877F2',
@@ -134,19 +134,19 @@ const STORIES: Record<string, ChannelStory> = {
   twitter: {
     id: 'twitter',
     name: 'X (Twitter)',
-    handle: '@foogle_udaipur',
-    badgeTag: 'Live Oven Broadcasts',
+    handle: '@howaboutcoffee',
+    badgeTag: 'Live Coffee Updates',
     ratingOrStat: '340+ Live Updates',
-    statLabel: 'Direct from the Pass',
+    statLabel: 'Fresh from the Bar',
     quote:
-      '450°C stone oven fired up early today. 48-hr slow fermented sourdough batches ready for lunch service. Come grab a fresh slice before it sells out.',
-    author: 'Chef Pass · Foogle Kitchen',
+      'Fresh brews are pouring at How About Coffee. Swing by Jagatpura for your next coffee break and snack fix.',
+    author: 'Coffee Desk · How About Coffee',
     avatar: '/images/photos/avatar-4.webp',
-    role: 'Head Pizzaiolo · Live from the Oven',
+    role: 'Barista Desk · Live from Café',
     timeAgo: '3 hours ago',
     helpfulCount: '120 reposts · 840 likes',
-    tag: '48-hr Slow Sourdough · 450°C Oven',
-    ctaText: 'Follow Kitchen Updates',
+    tag: 'Fresh Brews · Jaipur Café Vibes',
+    ctaText: 'Follow Café Updates',
     ctaHref: 'https://twitter.com',
     accentColor: '#0ea5e9',
     pinRotation: '1deg',
@@ -203,7 +203,7 @@ export const SocialProofSection: React.FC = () => {
               }}
             >
               <Coffee className="w-3.5 h-3.5 text-amber-500" />
-              <span>Foogle Courtyard Gallery · Pinned Memories</span>
+              <span>How About Coffee Moments · Jagatpura, Jaipur</span>
             </div>
 
             {/* Main Headline */}
@@ -218,7 +218,7 @@ export const SocialProofSection: React.FC = () => {
                   color: isDark ? '#fbbf24' : '#b45309',
                 }}
               >
-                Loved Across Udaipur.
+                Loved Across Jaipur.
               </span>
             </h2>
 
@@ -236,7 +236,7 @@ export const SocialProofSection: React.FC = () => {
           <div className="flex flex-wrap lg:flex-col gap-2.5 items-start lg:items-end">
             {[
               { id: 'google', label: '4.9★ Google Reviews', stat: '2,480+ Diners', color: '#4285F4' },
-              { id: 'instagram', label: '18.5K on Instagram', stat: '@fooglecafe', color: '#E1306C' },
+              { id: 'instagram', label: '18.5K on Instagram', stat: '@howaboutcoffee', color: '#E1306C' },
               { id: 'facebook', label: '99% Recommendation', stat: '14K Community', color: '#1877F2' },
               { id: 'twitter', label: 'Live Oven Updates', stat: 'Chef Pass', color: '#0ea5e9' },
             ].map((s) => {
@@ -336,11 +336,11 @@ export const SocialProofSection: React.FC = () => {
             color: isDark ? '#d4af37' : '#8c6d3d',
           }}
         >
-          <span className="hidden sm:inline">✦ EST. 2024 · UDAIPUR, RAJASTHAN</span>
+          <span className="hidden sm:inline">✦ EST. 2024 · JAIPUR, RAJASTHAN</span>
           <span className="mx-auto font-serif italic text-xs tracking-normal">
             ✦ Wooden Peg Clothesline · Hand-Pinned Guest Reviews &amp; Stories ✦
           </span>
-          <span className="hidden sm:inline">PANCHWATI COURTYARD ✦</span>
+          <span className="hidden sm:inline">JAGATPURA COURTYARD ✦</span>
         </div>
 
         {/* 4. Desktop/Tablet: 3D Physics Canvas with Clothespins & Hanging Badges */}
@@ -446,7 +446,7 @@ export const SocialProofSection: React.FC = () => {
             />
             <span className="inline-flex items-center gap-2 text-xs font-serif italic">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Real Stories from Udaipur Diners</span>
+              <span>Real Stories from Jaipur Diners</span>
             </span>
           </div>
         </div>
@@ -491,7 +491,7 @@ export const SocialProofSection: React.FC = () => {
                 className="mt-2 text-xs sm:text-sm font-serif leading-relaxed"
                 style={{ color: isDark ? 'rgba(203,213,225,0.72)' : 'rgba(71,85,105,0.85)' }}
               >
-                Read authentic Google Reviews, verified diner ratings, and courtyard moments from our cherished Udaipur guests.
+                Read authentic Google Reviews, verified diner ratings, and courtyard moments from our cherished Jaipur guests.
               </p>
             </div>
 

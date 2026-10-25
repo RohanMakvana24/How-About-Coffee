@@ -4,7 +4,8 @@ import React from 'react';
 import { AnimatedFooterLogo } from './AnimatedFooterLogo';
 import { useTheme } from '../../context/ThemeContext';
 import { ArrowUp, Sparkles, Heart } from 'lucide-react';
-import { FOOGLE_BUSINESS_INFO } from '../../data/businessInfo';
+import { BUSINESS_INFO } from '../../data/businessInfo';
+import { LazyMount } from '../common/LazyMount';
 
 
 export interface FooterLink {
@@ -31,7 +32,7 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
     title: 'Experience',
     links: [
       { label: 'Customer Reviews', href: '#reviews' },
-      { label: 'Find Us in Panchwati', href: '#contact' },
+      { label: 'Find Us in Jagatpura', href: '#contact' },
       { label: 'Table Reservations', href: '#contact' },
       { label: 'Dine-in Hours', href: '#contact' },
     ],
@@ -39,10 +40,10 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
   {
     title: 'Connect',
     links: [
-      { label: FOOGLE_BUSINESS_INFO.contact.phone, href: FOOGLE_BUSINESS_INFO.contact.phoneCallHref },
-      { label: FOOGLE_BUSINESS_INFO.contact.email, href: FOOGLE_BUSINESS_INFO.contact.emailMailtoHref },
-      { label: 'Panchwati, Udaipur', href: '#contact' },
-      { label: `Instagram @${FOOGLE_BUSINESS_INFO.contact.instagram}`, href: FOOGLE_BUSINESS_INFO.contact.instagramUrl },
+      { label: BUSINESS_INFO.contact.phone, href: BUSINESS_INFO.contact.phoneCallHref },
+      { label: BUSINESS_INFO.contact.email, href: BUSINESS_INFO.contact.emailMailtoHref },
+      { label: 'Jagatpura, Jaipur', href: '#contact' },
+      { label: `Instagram @${BUSINESS_INFO.contact.instagram}`, href: BUSINESS_INFO.contact.instagramUrl },
     ],
   },
 ];
@@ -58,6 +59,7 @@ export const GravityFooter: React.FC = () => {
 
   return (
     <footer
+      id="site-footer"
       className="relative w-full overflow-hidden border-t select-none transition-colors duration-300"
       style={{
         backgroundColor: isDark ? '#090D0B' : '#FAF8F5',
@@ -83,18 +85,18 @@ export const GravityFooter: React.FC = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               </div>
-              <span>Foogle Cafe &amp; Restaurant</span>
+              <span>How About Coffee</span>
             </div>
 
             <p
               className="text-sm leading-relaxed max-w-sm"
               style={{ color: isDark ? 'rgba(234, 240, 236, 0.72)' : 'rgba(24, 59, 43, 0.75)' }}
             >
-              Comforting cafe flavours, handcrafted espresso, and woodfired artisan treats in the heart of Panchwati, Udaipur.
+              Coffee, comfort food, and a relaxed café vibe in the heart of Jagatpura, Jaipur.
             </p>
 
             <span className="text-xs font-mono opacity-50 tracking-wider">
-              ©2026 · Panchwati, Udaipur, Rajasthan
+              ©2026 · Jagatpura, Jaipur, Rajasthan
             </span>
           </div>
 
@@ -140,7 +142,7 @@ export const GravityFooter: React.FC = () => {
               }}
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Official Foogle Emblem · Panchwati, Udaipur</span>
+              <span>Official How About Coffee Emblem · Jagatpura, Jaipur</span>
             </span>
 
             <span
@@ -151,7 +153,7 @@ export const GravityFooter: React.FC = () => {
               }}
             >
               <Heart className="w-3.5 h-3.5 text-red-500 fill-current" />
-              <span>Crafted with love in Panchwati, Udaipur</span>
+              <span>Crafted with love in Jagatpura, Jaipur</span>
             </span>
           </div>
 
@@ -170,9 +172,16 @@ export const GravityFooter: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Authentic Animated Foogle Food-Doodle Emblem Grand Finale */}
-      <div className="w-full relative py-8 sm:py-12 px-4 sm:px-8 lg:px-14 flex items-center justify-center">
-        <AnimatedFooterLogo isDark={isDark} />
+      {/* 2. Authentic Animated How About Coffee Emblem Grand Finale */}
+      <div className="w-full relative px-4 sm:px-8 lg:px-14 flex items-center justify-center">
+        <LazyMount
+          className="w-full"
+          minHeight="100svh"
+          rootMargin="240px 0px"
+          placeholder={<div className="min-h-[100svh]" aria-hidden="true" />}
+        >
+          <AnimatedFooterLogo isDark={isDark} />
+        </LazyMount>
       </div>
     </footer>
   );

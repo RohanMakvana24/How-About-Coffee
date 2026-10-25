@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 
 // Recommended quick add-on favorites
-const FOOGLE_ADDONS: Array<{
+const COFFEE_ADDONS: Array<{
   id: string;
   name: string;
   price: number;
@@ -43,14 +43,14 @@ const FOOGLE_ADDONS: Array<{
     name: 'Peri Peri Crisp Fries',
     price: 149,
     category: 'Snacks',
-    image: '/images/photos/peri-peri-fries.webp',
+    image: '/images/photos/menu-peri-peri-fries.webp',
   },
   {
     id: 'addon-brownie',
     name: 'Sizzling Brownie & Gelato',
     price: 219,
     category: 'Desserts',
-    image: '/images/photos/sizzling-brownie.webp',
+    image: '/images/photos/menu-brownie-ice-cream.webp',
   },
 ];
 
@@ -151,7 +151,7 @@ export const CartDrawer: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-lg sm:text-xl font-bold font-serif tracking-tight">
-                  Your Foogle Tray
+                  Your Coffee Tray
                 </h2>
                 <p className="text-xs opacity-70">
                   {totalItems} {totalItems === 1 ? 'item' : 'items'} · Fresh from kitchen
@@ -201,7 +201,7 @@ export const CartDrawer: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold font-serif mb-2">Your Food Tray is Empty</h3>
                 <p className="text-xs sm:text-sm opacity-70 max-w-xs mb-6 leading-relaxed">
-                  Explore our handcrafted burgers, stone-oven pizzas, pastas, and shakes from Panchwati kitchen.
+                  Explore our handcrafted burgers, stone-oven pizzas, pastas, and shakes from our Jagatpura kitchen.
                 </p>
                 <button
                   type="button"
@@ -335,7 +335,7 @@ export const CartDrawer: React.FC = () => {
                     <span className="text-xs font-mono uppercase tracking-wider font-bold opacity-75">
                       Selected Dishes ({items.length})
                     </span>
-                    <span className="text-xs font-medium opacity-60">Panchwati Kitchen</span>
+                    <span className="text-xs font-medium opacity-60">Jagatpura Kitchen</span>
                   </div>
 
                   <div className="space-y-2.5">
@@ -443,12 +443,12 @@ export const CartDrawer: React.FC = () => {
                   <div className="flex items-center gap-1.5 mb-2.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     <span className="text-xs font-mono uppercase tracking-wider font-bold opacity-80">
-                      Popular Foogle Pairings
+                      Popular Coffee Pairings
                     </span>
                   </div>
 
                   <div className="grid grid-cols-3 gap-2">
-                    {FOOGLE_ADDONS.map((addon) => {
+                    {COFFEE_ADDONS.map((addon) => {
                       const isAlreadyInCart = items.some((i) => i.id === addon.id);
                       return (
                         <div
@@ -553,7 +553,7 @@ export const CartDrawer: React.FC = () => {
                   <div className="text-left leading-tight">
                     <span className="block text-sm font-extrabold">Order on WhatsApp</span>
                     <span className="block text-[10px] opacity-85 font-mono">
-                      Direct to Foogle Kitchen
+                      Direct to Café Kitchen
                     </span>
                   </div>
                 </div>
@@ -564,10 +564,9 @@ export const CartDrawer: React.FC = () => {
                 </div>
               </button>
 
-              {/* Kitchen Confirmation note */}
               <div className="flex items-center justify-center gap-1.5 text-[11px] opacity-60">
                 <Clock className="w-3 h-3 text-amber-500" />
-                <span>Typical prep time: 15–20 mins · Panchwati, Udaipur</span>
+                <span>Typical prep time: 15–20 mins · Jagatpura, Jaipur</span>
               </div>
             </div>
           )}

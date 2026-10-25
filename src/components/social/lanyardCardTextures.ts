@@ -1,6 +1,6 @@
 /**
  * Ultra-realistic, High-Resolution (1536x2160) Procedural Badge & QR Generator.
- * Crystal-clear typography, sharp vector graphics, and realistic QR matrices.
+ * Crystal-clear typography, sharp vector graphics, and live QR encoding.
  */
 
 function stringToSeed(str: string): number {
@@ -21,7 +21,7 @@ function createSeededRandom(seed: number) {
   };
 }
 
-import REAL_QR_DATA from './realQrMatrices.json';
+import QRCode from 'qrcode';
 
 // Draw an authentic, 100% scannable real QR Code
 function drawRealisticQRCode(
@@ -29,12 +29,10 @@ function drawRealisticQRCode(
   cx: number,
   cy: number,
   size: number,
-  type: 'google' | 'instagram' | 'facebook',
   payload: string
 ) {
-  const qrEntry = REAL_QR_DATA[type];
-  const grid: number[][] = qrEntry ? qrEntry.matrix : [];
-  const modules = grid.length || 29;
+  const qr = QRCode.create(payload, { errorCorrectionLevel: 'M' });
+  const modules = qr.modules.size;
   const modSize = size / modules;
   const startX = cx - size / 2;
   const startY = cy - size / 2;
@@ -60,7 +58,7 @@ function drawRealisticQRCode(
   ctx.fillStyle = '#000000';
   for (let r = 0; r < modules; r++) {
     for (let c = 0; c < modules; c++) {
-      if (grid[r] && grid[r][c] === 1) {
+      if (qr.modules.get(r, c)) {
         const mx = startX + c * modSize;
         const my = startY + r * modSize;
         ctx.fillRect(mx, my, modSize, modSize);
@@ -156,11 +154,11 @@ export function createGoogleFrontCanvas(): HTMLCanvasElement {
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 84px "Inter", system-ui, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('Foogle Cafe & Resto', 768, 715);
+  ctx.fillText('How About Coffee', 768, 715);
 
   ctx.fillStyle = '#BAE6FD';
   ctx.font = '700 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('Panchwati, Udaipur · Rajasthan', 768, 785);
+  ctx.fillText('Jagatpura, Jaipur · Rajasthan', 768, 785);
 
   // Big 4.9 Score Box
   ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
@@ -194,11 +192,11 @@ export function createGoogleFrontCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#E2E8F0';
   ctx.font = '700 44px "Inter", system-ui, sans-serif';
-  ctx.fillText('“Best woodfired pizzas & specialty brews in Udaipur”', 768, 1375);
+  ctx.fillText('“Fresh coffee, comforting bites & cozy café vibes in Jaipur.”', 768, 1375);
 
   ctx.fillStyle = '#FBBF24';
   ctx.font = '800 40px "Inter", system-ui, sans-serif';
-  ctx.fillText('— Rated 5 Stars by Verified Diners', 768, 1450);
+  ctx.fillText('— Rated 5 Stars by Nearby Diners', 768, 1450);
 
   // Clean Flip Hint Button Pill (without broken characters)
   const pillGrad = ctx.createLinearGradient(318, 1620, 1218, 1620);
@@ -264,7 +262,7 @@ export function createGoogleBackCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 76px "Inter", system-ui, sans-serif';
-  ctx.fillText('Review Foogle on Google', 768, 385);
+  ctx.fillText('Review How About Coffee', 768, 385);
 
   ctx.fillStyle = '#94A3B8';
   ctx.font = '600 38px "Inter", system-ui, sans-serif';
@@ -275,7 +273,6 @@ export function createGoogleBackCanvas(): HTMLCanvasElement {
     768,
     970,
     760,
-    'google',
     'https://maps.app.goo.gl/uXj9V1cvyb1vG2Y9A'
   );
 
@@ -291,7 +288,7 @@ export function createGoogleBackCanvas(): HTMLCanvasElement {
   ctx.fillStyle = '#38BDF8';
   ctx.font = '800 46px "Courier New", monospace';
   ctx.textAlign = 'center';
-  ctx.fillText('g.page/foogle-cafe-udaipur', 768, 1538);
+  ctx.fillText('howaboutcoffee.in', 768, 1538);
 
   ctx.fillStyle = '#F59E0B';
   ctx.font = '64px sans-serif';
@@ -309,7 +306,7 @@ export function createGoogleBackCanvas(): HTMLCanvasElement {
 }
 
 // ----------------------------------------------------
-// INSTAGRAM BADGE (REAL FOOGLE ACCOUNT @foogle_foods)
+// INSTAGRAM BADGE (OFFICIAL HOW ABOUT COFFEE ACCOUNT @howaboutcoffee)
 // ----------------------------------------------------
 
 export function createInstagramFrontCanvas(): HTMLCanvasElement {
@@ -390,11 +387,11 @@ export function createInstagramFrontCanvas(): HTMLCanvasElement {
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 84px "Inter", system-ui, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('foogle_foods', 768, 715);
+  ctx.fillText('howaboutcoffee', 768, 715);
 
   ctx.fillStyle = '#FDA4AF';
   ctx.font = '700 40px "Inter", system-ui, sans-serif';
-  ctx.fillText('Foogle cafe ❤️ · Panchwati 📍 Field Club', 768, 785);
+  ctx.fillText('How About Coffee ❤️ · Jagatpura 📍 Jaipur', 768, 785);
 
   // Stats Box - 100% Real from Live Instagram Profile
   ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
@@ -421,18 +418,18 @@ export function createInstagramFrontCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#F43F5E';
   ctx.font = '900 84px "Inter", system-ui, sans-serif';
-  ctx.fillText('Udaipur', 1110, 985);
+  ctx.fillText('Jaipur', 1110, 985);
   ctx.fillStyle = '#FDA4AF';
   ctx.font = '700 36px "Inter", system-ui, sans-serif';
   ctx.fillText('Location', 1110, 1065);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '700 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('“Your cozy Corner for fresh coffee, comfort food & good vibes.”', 768, 1275);
+  ctx.fillText('“Your cozy corner for fresh coffee, comfort food & good vibes.”', 768, 1275);
 
   ctx.fillStyle = '#FB7185';
   ctx.font = '800 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('Drop by, unwind, stay a while · @foogle_foods', 768, 1365);
+  ctx.fillText('Drop by, unwind, stay a while · @howaboutcoffee', 768, 1365);
 
   // Clean Flip Hint Button Pill
   const pillGrad = ctx.createLinearGradient(318, 1620, 1218, 1620);
@@ -498,7 +495,7 @@ export function createInstagramBackCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 76px "Inter", system-ui, sans-serif';
-  ctx.fillText('Follow @foogle_foods', 768, 385);
+  ctx.fillText('Follow @howaboutcoffee', 768, 385);
 
   ctx.fillStyle = '#FDA4AF';
   ctx.font = '600 38px "Inter", system-ui, sans-serif';
@@ -509,8 +506,7 @@ export function createInstagramBackCanvas(): HTMLCanvasElement {
     768,
     970,
     760,
-    'instagram',
-    'https://www.instagram.com/foogle_foods/'
+    'https://www.instagram.com/howaboutcoffee/'
   );
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
@@ -524,11 +520,11 @@ export function createInstagramBackCanvas(): HTMLCanvasElement {
   ctx.fillStyle = '#F43F5E';
   ctx.font = '800 46px "Courier New", monospace';
   ctx.textAlign = 'center';
-  ctx.fillText('instagram.com/foogle_foods', 768, 1538);
+  ctx.fillText('instagram.com/howaboutcoffee', 768, 1538);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '800 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('Join 2,840+ Foogle Foodies in Udaipur', 768, 1665);
+  ctx.fillText('Join the How About Coffee community', 768, 1665);
 
   ctx.fillStyle = '#94A3B8';
   ctx.font = '700 34px "Inter", system-ui, sans-serif';
@@ -538,7 +534,7 @@ export function createInstagramBackCanvas(): HTMLCanvasElement {
 }
 
 // ----------------------------------------------------
-// FACEBOOK BADGE (REAL PAGE "Foogle Foods Udaipur")
+// FACEBOOK BADGE (OFFICIAL How About Coffee PAGE)
 // ----------------------------------------------------
 
 export function createFacebookFrontCanvas(): HTMLCanvasElement {
@@ -616,11 +612,11 @@ export function createFacebookFrontCanvas(): HTMLCanvasElement {
   // Brand Name
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 88px "Inter", system-ui, sans-serif';
-  ctx.fillText('Foogle', 768, 715);
+  ctx.fillText('How About Coffee', 768, 715);
 
   ctx.fillStyle = '#93C5FD';
   ctx.font = '700 40px "Inter", system-ui, sans-serif';
-  ctx.fillText('Cafe · $$ · Lives in Udaipur, Rajasthan', 768, 785);
+  ctx.fillText('Cafe · $$ · Lives in Jagatpura, Jaipur', 768, 785);
 
   // Exact Stats Box from Facebook screenshot
   ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
@@ -647,18 +643,18 @@ export function createFacebookFrontCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#38BDF8';
   ctx.font = '900 84px "Inter", system-ui, sans-serif';
-  ctx.fillText('Udaipur', 1110, 985);
+  ctx.fillText('Jaipur', 1110, 985);
   ctx.fillStyle = '#93C5FD';
   ctx.font = '700 36px "Inter", system-ui, sans-serif';
   ctx.fillText('Rajasthan', 1110, 1065);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '700 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('“A cozy place to enjoy sweet & savory delicacy and Amazing thick shakes”', 768, 1275);
+  ctx.fillText('“A cozy place to enjoy coffee, comfort food and hand-crafted shakes.”', 768, 1275);
 
   ctx.fillStyle = '#60A5FA';
   ctx.font = '800 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('Connect on WhatsApp & Messenger · Foogle Udaipur', 768, 1365);
+  ctx.fillText('Connect on WhatsApp & Messenger · How About Coffee', 768, 1365);
 
   // Clean Flip Hint Button Pill
   const pillGrad = ctx.createLinearGradient(318, 1620, 1218, 1620);
@@ -724,19 +720,18 @@ export function createFacebookBackCanvas(): HTMLCanvasElement {
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 76px "Inter", system-ui, sans-serif';
-  ctx.fillText('Join Foogle on Facebook', 768, 385);
+  ctx.fillText('Join How About Coffee on Facebook', 768, 385);
 
   ctx.fillStyle = '#93C5FD';
   ctx.font = '600 38px "Inter", system-ui, sans-serif';
-  ctx.fillText('Point your phone camera to check-in & like page', 768, 450);
+  ctx.fillText('Point your phone camera to check in & follow the page', 768, 450);
 
   drawRealisticQRCode(
     ctx,
     768,
     970,
     760,
-    'facebook',
-    'https://www.facebook.com/FoogleFoods/'
+    'https://www.facebook.com/howaboutcoffee'
   );
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
@@ -750,11 +745,11 @@ export function createFacebookBackCanvas(): HTMLCanvasElement {
   ctx.fillStyle = '#60A5FA';
   ctx.font = '800 46px "Courier New", monospace';
   ctx.textAlign = 'center';
-  ctx.fillText('facebook.com/FoogleFoods', 768, 1538);
+  ctx.fillText('facebook.com/howaboutcoffee', 768, 1538);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '800 42px "Inter", system-ui, sans-serif';
-  ctx.fillText('1.1K+ Followers · Foogle Cafe Udaipur', 768, 1665);
+  ctx.fillText('1.1K+ Followers · How About Coffee Jaipur', 768, 1665);
 
   ctx.fillStyle = '#94A3B8';
   ctx.font = '700 34px "Inter", system-ui, sans-serif';
@@ -775,20 +770,20 @@ export function createStrapCanvas(type: 'google' | 'instagram' | 'facebook'): HT
 
   let bgColor = '#0B1624';
   let accentColor = '#D4AF37';
-  let text = '★ FOOGLE CAFE · 4.9★ GOOGLE REVIEWS ★';
+  let text = '★ HOW ABOUT COFFEE · 4.9★ GOOGLE REVIEWS ★';
 
   if (type === 'google') {
     bgColor = '#0B1624';
     accentColor = '#D4AF37';
-    text = '★ FOOGLE CAFE · GOOGLE 4.9★ · UDAIPUR ★';
+    text = '★ HOW ABOUT COFFEE · GOOGLE 4.9★ · JAIPUR ★';
   } else if (type === 'instagram') {
     bgColor = '#23081E';
     accentColor = '#F472B6';
-    text = '📷 @FOOGLECAFE · REELS & STORIES · UDAIPUR 📷';
+    text = '📷 @HOWABOUTCOFFEE · REELS & STORIES · JAIPUR 📷';
   } else if (type === 'facebook') {
     bgColor = '#071830';
     accentColor = '#3B82F6';
-    text = '👍 FOOGLE CAFE · 99% RECOMMENDED · UDAIPUR 👍';
+    text = '👍 HOW ABOUT COFFEE · 99% RECOMMENDED · JAIPUR 👍';
   }
 
   ctx.fillStyle = bgColor;

@@ -1,249 +1,91 @@
 import { MenuCategory, MenuItem } from '../types/menu';
 
 export const MENU_CATEGORIES: MenuCategory[] = [
-  { id: 'all', label: 'All Items' },
-  { id: 'pizza', label: 'Pizza' },
-  { id: 'sandwiches', label: 'Sandwiches' },
-  { id: 'pasta', label: 'Pasta' },
-  { id: 'sides-snacks', label: 'Sides & Snacks' },
-  { id: 'cafe-specials', label: 'Cafe Specials' },
-  { id: 'desserts', label: 'Desserts' },
+  { id: 'all', label: 'All Favourites' },
+  { id: 'coffee', label: 'Hot Coffee' },
+  { id: 'cold-coffee', label: 'Cold & Chilled' },
+  { id: 'sandwiches-wraps', label: 'Sandwiches & Wraps' },
+  { id: 'pizza-burgers', label: 'Pizza & Burgers' },
+  { id: 'snacks', label: 'Quick Bites' },
+  { id: 'desserts', label: 'Sweet Treats' },
 ];
 
 /**
- * Verified menu data with commercial cafe photography, tabletop material specifications,
- * and FOOGLE brand card placement.
+ * Demo menu assembled from the café's current public ordering listings.
+ * Existing project photography is used as representative imagery until the
+ * owner supplies an official menu/photos.
  */
 export const MENU_ITEMS: MenuItem[] = [
-  // Pizza
   {
-    id: 'pizza-margherita',
-    name: 'Margherita Pizza',
-    categoryId: 'pizza',
-    categoryLabel: 'Pizza',
-    description: 'Classic crisp crust topped with vibrant tomato sauce, melted mozzarella, and fresh basil leaves.',
-    imageUrl: '/images/dishes/pizza-margherita.webp',
-    tabletopMaterial: 'Warm Italian travertine stone slab with subtle natural veining',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#EA4335', // Red
+    id: 'cappuccino', name: 'Cappuccino', categoryId: 'coffee', categoryLabel: 'Hot Coffee', price: '₹190', featured: true,
+    description: 'A creamy, frothy balance of bold espresso, steamed milk and foam.', imageUrl: '/images/menu-swiggy/cappuccino.jpg', dietary: 'veg',
   },
   {
-    id: 'pizza-paneer-tikka',
-    name: 'Paneer Tikka Pizza',
-    categoryId: 'pizza',
-    categoryLabel: 'Pizza',
-    description: 'Marinated spiced paneer cubes, crisp capsicum, and onions baked with rich melted cheese.',
-    imageUrl: '/images/dishes/pizza-paneer-tikka.webp',
-    tabletopMaterial: 'Rustic reclaimed dark oak wood table with warm natural grain',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#FBBC05', // Yellow
+    id: 'cafe-latte', name: 'Café Latte', categoryId: 'coffee', categoryLabel: 'Hot Coffee', price: '₹210',
+    description: 'Rich espresso softened with silky steamed milk and a gentle layer of froth.', imageUrl: '/images/menu-swiggy/cafe-latte.jpg', dietary: 'veg',
   },
   {
-    id: 'pizza-exotic',
-    name: 'Exotic Pizza',
-    categoryId: 'pizza',
-    categoryLabel: 'Pizza',
-    description: 'Loaded with a vibrant medley of colourful bell peppers, black olives, sweet corn, and herbs.',
-    imageUrl: '/images/dishes/pizza-exotic.webp',
-    tabletopMaterial: 'Textured matte beige ceramic tabletop with linen napkin corner',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#34A853', // Green
+    id: 'hazelnut-cappuccino', name: 'Hazelnut Cappuccino', categoryId: 'coffee', categoryLabel: 'Hot Coffee', price: '₹194', featured: true,
+    description: 'The classic cappuccino finished with warm, nutty hazelnut notes.', imageUrl: '/images/menu-swiggy/hazelnut-cappuccino.jpg', dietary: 'veg',
   },
   {
-    id: 'pizza-foogle-special',
-    name: 'Foogle Special Pizza',
-    categoryId: 'pizza',
-    categoryLabel: 'Pizza',
-    description: 'Chef-crafted signature crust featuring house specialty toppings and a double blend of melted cheese.',
-    imageUrl: '/images/dishes/pizza-foogle-special.webp',
-    tabletopMaterial: 'Polished charcoal slate table with warm rim light reflections',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#4285F4', // Blue
+    id: 'flat-white', name: 'Flat White', categoryId: 'coffee', categoryLabel: 'Hot Coffee', price: '₹230',
+    description: 'A velvety double espresso with a fine layer of smooth microfoam.', imageUrl: '/images/menu-swiggy/flat-white.jpg', dietary: 'veg',
   },
   {
-    id: 'pizza-jain-special',
-    name: 'Jain Special Pizza',
-    categoryId: 'pizza',
-    categoryLabel: 'Pizza',
-    description: 'Specially prepared without root vegetables, using fresh herbs, tomatoes, bell peppers, and cheese.',
-    imageUrl: '/images/dishes/pizza-jain-special.webp',
-    tabletopMaterial: 'Clean light travertine table with fresh herb sprig nearby',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#34A853', // Green
-  },
-
-  // Sandwiches
-  {
-    id: 'sandwich-veg',
-    name: 'Veg Sandwich',
-    categoryId: 'sandwiches',
-    categoryLabel: 'Sandwich',
-    description: 'Freshly sliced garden cucumbers, ripe tomatoes, and house seasoning layered in soft cafe bread.',
-    imageUrl: '/images/dishes/sandwich-veg.webp',
-    tabletopMaterial: 'Light honey oak cafe tabletop with soft linen texture',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#34A853', // Green
+    id: 'iced-hazelnut-latte', name: 'Iced Hazelnut Latte', categoryId: 'cold-coffee', categoryLabel: 'Cold & Chilled', price: '₹250', featured: true,
+    description: 'Chilled espresso, milk and hazelnut served smooth over ice.', imageUrl: '/images/menu-swiggy/iced-hazelnut-latte.jpg', dietary: 'veg',
   },
   {
-    id: 'sandwich-grilled',
-    name: 'Grilled Sandwich',
-    categoryId: 'sandwiches',
-    categoryLabel: 'Sandwich',
-    description: 'Golden toasted bread stuffed with seasoned vegetable filling and melted cheese, served crisp and warm.',
-    imageUrl: '/images/dishes/sandwich-grilled.webp',
-    tabletopMaterial: 'Rustic dark slate board on warm wooden table',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#FBBC05', // Yellow
-  },
-
-  // Pasta
-  {
-    id: 'pasta-arrabbiata',
-    name: 'Arrabbiata Pasta',
-    categoryId: 'pasta',
-    categoryLabel: 'Pasta',
-    description: 'Penne tossed in a fiery, garlic-infused San Marzano tomato sauce with chilli flakes and Italian herbs.',
-    imageUrl: '/images/dishes/pasta-arrabbiata.webp',
-    tabletopMaterial: 'Warm terracotta stone tabletop with rustic charm',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#EA4335', // Red
+    id: 'vietnamese-cold-brew', name: 'Vietnamese Cold Brew', categoryId: 'cold-coffee', categoryLabel: 'Cold & Chilled', price: '₹255',
+    description: 'Bold slow-brewed coffee made creamy and lightly sweet with condensed milk.', imageUrl: '/images/menu-swiggy/vietnamese-cold-brew.jpg', dietary: 'veg',
   },
   {
-    id: 'pasta-alfredo',
-    name: 'Alfredo Pasta',
-    categoryId: 'pasta',
-    categoryLabel: 'Pasta',
-    description: 'Creamy, velvety white sauce simmered with butter, herbs, and finely grated cheese coating tender pasta.',
-    imageUrl: '/images/dishes/pasta-alfredo.webp',
-    tabletopMaterial: 'Dark walnut dining table with soft depth',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#FBBC05', // Yellow
+    id: 'oreo-nutella-shake', name: 'Oreo Nutella Shake', categoryId: 'cold-coffee', categoryLabel: 'Cold & Chilled', price: '₹250',
+    description: 'A thick and indulgent blend of Oreo, Nutella and creamy goodness.', imageUrl: '/images/menu-swiggy/oreo-nutella-shake.jpg', dietary: 'veg',
   },
   {
-    id: 'pasta-mix-sauce',
-    name: 'Mix Sauce Pasta',
-    categoryId: 'pasta',
-    categoryLabel: 'Pasta',
-    description: 'The best of both worlds — a rich pink blend of zesty red marinara and silky creamy white sauce.',
-    imageUrl: '/images/dishes/pasta-mix-sauce.webp',
-    tabletopMaterial: 'Cream travertine tabletop with warm natural light',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#4285F4', // Blue
-  },
-
-  // Sides & Snacks
-  {
-    id: 'sides-garlic-bread',
-    name: 'Garlic Bread',
-    categoryId: 'sides-snacks',
-    categoryLabel: 'Sides & Snacks',
-    description: 'Artisanal baguette slices brushed generously with fragrant garlic butter and toasted to golden perfection.',
-    imageUrl: '/images/dishes/sides-garlic-bread.webp',
-    tabletopMaterial: 'Rustic olive wood platter on dark cafe table',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#FBBC05', // Yellow
+    id: 'veg-grilled-sandwich', name: 'Veg Grilled Sandwich', categoryId: 'sandwiches-wraps', categoryLabel: 'Sandwiches & Wraps', price: '₹190', featured: true,
+    description: 'Crisp brown bread packed with fresh vegetables and grilled until golden.', imageUrl: '/images/menu-swiggy/veg-grilled-sandwich.jpg', dietary: 'veg',
   },
   {
-    id: 'sides-french-fries',
-    name: 'French Fries',
-    categoryId: 'sides-snacks',
-    categoryLabel: 'Sides & Snacks',
-    description: 'Classic golden potato batons fried until crisp on the outside and tender inside, lightly salted.',
-    imageUrl: '/images/dishes/sides-french-fries.webp',
-    tabletopMaterial: 'Industrial matte black zinc cafe table with dip ramekin',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#FBBC05', // Yellow
+    id: 'peri-paneer-sandwich', name: 'Peri Peri Paneer Sandwich', categoryId: 'sandwiches-wraps', categoryLabel: 'Sandwiches & Wraps', price: '₹250',
+    description: 'Fiery peri-peri paneer layered with crunchy vegetables and flavourful sauces.', imageUrl: '/images/menu-swiggy/peri-paneer-sandwich.jpg', dietary: 'veg',
   },
   {
-    id: 'sides-nachos',
-    name: 'Nachos',
-    categoryId: 'sides-snacks',
-    categoryLabel: 'Sides & Snacks',
-    description: 'Crunchy corn tortilla chips served with warm melted cheese drizzle and house tomato salsa.',
-    imageUrl: '/images/dishes/sides-nachos.webp',
-    tabletopMaterial: 'Rustic dark slate platter on travertine cafe table',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#EA4335', // Red
-  },
-
-  // Cafe Specials
-  {
-    id: 'special-maggi',
-    name: 'Maggi',
-    categoryId: 'cafe-specials',
-    categoryLabel: 'Cafe Special',
-    description: 'Classic spiced cafe noodles prepared hot and piping with aromatic herbs and mild masala blend.',
-    imageUrl: '/images/dishes/special-maggi.webp',
-    tabletopMaterial: 'Warm cafe wooden table with steaming cup of chai in background',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#FBBC05', // Yellow
+    id: 'tandoori-paneer-wrap', name: 'Tandoori Paneer Wrap', categoryId: 'sandwiches-wraps', categoryLabel: 'Sandwiches & Wraps', price: '₹210', featured: true,
+    description: 'Smoky tandoori paneer, crisp vegetables and creamy sauce wrapped fresh.', imageUrl: '/images/menu-swiggy/tandoori-paneer-wrap.jpg', dietary: 'veg',
   },
   {
-    id: 'special-misal-pav',
-    name: 'Misal Pav',
-    categoryId: 'cafe-specials',
-    categoryLabel: 'Cafe Special',
-    description: 'Spicy sprouted lentil curry topped with crunchy farsan and diced onions, served with soft buttered pav.',
-    imageUrl: '/images/dishes/special-misal-pav.webp',
-    tabletopMaterial: 'Handcrafted ceramic serving tray on stone table',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#EA4335', // Red
+    id: 'farm-house-pizza', name: 'Farm House Pizza', categoryId: 'pizza-burgers', categoryLabel: 'Pizza & Burgers', price: '₹275', featured: true,
+    description: 'A satisfying vegetable-loaded pizza with melted cheese and Italian seasoning.', imageUrl: '/images/menu-swiggy/farm-house-pizza.jpg', dietary: 'veg',
   },
   {
-    id: 'special-butter-garlic-mushroom',
-    name: 'Butter Garlic Mushroom',
-    categoryId: 'cafe-specials',
-    categoryLabel: 'Cafe Special',
-    description: 'Fresh button mushrooms sautéed in rich garlic butter with freshly cracked black pepper and parsley.',
-    imageUrl: '/images/dishes/special-butter-garlic-mushroom.webp',
-    tabletopMaterial: 'Rustic cast-iron pan on dark wood trivet',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#34A853', // Green
+    id: 'tandoori-paneer-pizza', name: 'Tandoori Paneer Pizza', categoryId: 'pizza-burgers', categoryLabel: 'Pizza & Burgers', price: '₹360',
+    description: 'Spiced paneer and fresh vegetables over a cheesy, oven-baked crust.', imageUrl: '/images/menu-swiggy/tandoori-paneer-pizza.jpg', dietary: 'veg',
   },
   {
-    id: 'special-hummus-pita',
-    name: 'Hummus with Pita',
-    categoryId: 'cafe-specials',
-    categoryLabel: 'Cafe Special',
-    description: 'Smooth, creamy chickpea and tahini dip drizzled with olive oil, accompanied by warm pita bread wedges.',
-    imageUrl: '/images/photos/hummus-pita.webp',
-    tabletopMaterial: 'Mediterranean stone tabletop with warm natural daylight',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#4285F4', // Blue
-  },
-
-  // Desserts
-  {
-    id: 'dessert-waffles',
-    name: 'Waffles',
-    categoryId: 'desserts',
-    categoryLabel: 'Dessert',
-    description: 'Freshly baked Belgian-style waffles with crisp golden pockets, served with rich chocolate or maple drizzle.',
-    imageUrl: '/images/photos/nutella-waffle.webp',
-    tabletopMaterial: 'Sunlit marble cafe table with powdered sugar dusting',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#FBBC05', // Yellow
+    id: 'crispy-paneer-burger', name: 'Crispy Paneer Burger', categoryId: 'pizza-burgers', categoryLabel: 'Pizza & Burgers', price: '₹180',
+    description: 'A crisp paneer patty, fresh vegetables and signature sauce in a soft bun.', imageUrl: '/images/photos/menu-crispy-paneer-burger.webp', dietary: 'veg',
   },
   {
-    id: 'dessert-sizzling-brownie',
-    name: 'Sizzling Brownie',
-    categoryId: 'desserts',
-    categoryLabel: 'Dessert',
-    description: 'Warm fudge brownie served on a piping hot iron sizzler plate topped with cold vanilla scoop and chocolate sauce.',
-    imageUrl: '/images/photos/sizzling-brownie.webp',
-    tabletopMaterial: 'Rustic wooden trivet holding cast-iron sizzler on dark cafe table',
-    tabletopCardPlacement: 'bottom-left',
-    accentColor: '#EA4335', // Red
+    id: 'masala-maggi', name: 'Masala Maggi', categoryId: 'snacks', categoryLabel: 'Quick Bites', price: '₹150', featured: true,
+    description: 'Comforting Maggi tossed with crunchy vegetables and a savoury masala blend.', imageUrl: '/images/photos/menu-masala-maggi.webp', dietary: 'veg',
   },
   {
-    id: 'dessert-ice-cream-tacos',
-    name: 'Ice Cream Tacos',
-    categoryId: 'desserts',
-    categoryLabel: 'Dessert',
-    description: 'Crisp waffle taco shells filled with scoops of premium ice cream, sprinkled with crunchy toppings.',
-    imageUrl: '/images/photos/ice-cream-tacos.webp',
-    tabletopMaterial: 'Contemporary bright cafe surface with colorful napkin',
-    tabletopCardPlacement: 'bottom-right',
-    accentColor: '#4285F4', // Blue
+    id: 'peri-peri-fries', name: 'Peri-Peri Fries', categoryId: 'snacks', categoryLabel: 'Quick Bites', price: '₹190',
+    description: 'Golden fries tossed in a lively peri-peri seasoning.', imageUrl: '/images/photos/menu-peri-peri-fries.webp', dietary: 'veg',
+  },
+  {
+    id: 'cheese-garlic-bread', name: 'Cheese Garlic Bread', categoryId: 'snacks', categoryLabel: 'Quick Bites', price: '₹180',
+    description: 'Golden toasted bread with aromatic garlic butter and bubbling cheese.', imageUrl: '/images/photos/menu-cheese-garlic-bread.webp', dietary: 'veg',
+  },
+  {
+    id: 'brownie-ice-cream', name: 'Brownie With Ice Cream', categoryId: 'desserts', categoryLabel: 'Sweet Treats', price: '₹240', featured: true,
+    description: 'A warm chocolate brownie crowned with a scoop of creamy vanilla ice cream.', imageUrl: '/images/photos/menu-brownie-ice-cream.webp', dietary: 'veg',
+  },
+  {
+    id: 'nutella-brownie', name: 'Nutella Brownie', categoryId: 'desserts', categoryLabel: 'Sweet Treats', price: '₹270',
+    description: 'Warm fudgy brownie finished with a generous layer of rich Nutella.', imageUrl: '/images/photos/menu-nutella-brownie.webp', dietary: 'veg',
   },
 ];

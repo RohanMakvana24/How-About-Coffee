@@ -1,5 +1,9 @@
-import { ButtonDemo } from "@/components/ui/button-border";
+import { AnimatedText } from "@/components/ui/animated-text";
 
 export default function DemoOne() {
-  return <ButtonDemo />;
+  return (
+    <main>
+      <AnimatedText text="Font Design" fontSize={100} />
+    </main>
+  );
 }
