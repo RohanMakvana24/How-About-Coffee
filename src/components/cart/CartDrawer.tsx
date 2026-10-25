@@ -96,7 +96,7 @@ export const CartDrawer: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] overflow-hidden select-none">
+    <div data-lenis-prevent className="fixed inset-0 z-[200] overflow-hidden select-none">
       {/* 1. Backdrop Overlay with Blur */}
       <div
         onClick={closeCart}

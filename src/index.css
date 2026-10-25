@@ -270,6 +270,12 @@ html.lenis body {
   overflow: clip;
 }
 
+/* Nested panels keep their own natural wheel/touch scrolling while Lenis
+   eases the document behind them. */
+[data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 body {
   background-color: var(--color-bg-page);
   color: var(--color-text-primary);
