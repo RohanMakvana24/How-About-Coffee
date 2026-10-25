@@ -34,7 +34,7 @@ export const SignatureDishesSection: React.FC = () => {
 
           {[{ item: pizza, note: 'Add something savoury', icon: Sparkles }, { item: dessert, note: 'Finish on a sweet note', icon: Heart }].map(({ item, note, icon: Icon }) => (
             <article key={item.id} className="group grid min-h-[235px] overflow-hidden rounded-[2rem] border sm:grid-cols-[.95fr_1.05fr] lg:col-span-5" style={{ background: 'var(--color-bg-page)', borderColor: 'var(--color-border-subtle)' }}>
-              <div className="relative min-h-[210px] overflow-hidden sm:min-h-0"><CafeImage src={item.imageUrl} alt={item.name} containerClassName="absolute inset-0" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /><span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-black text-[#4A2416]">100% VEG</span></div>
+              <div className="relative min-h-[210px] overflow-hidden sm:min-h-0"><CafeImage src={item.id === 'farm-house-pizza' ? '/images/photos/gallery-farmhouse-pizza.webp' : item.imageUrl} alt={item.name} containerClassName="absolute inset-0" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /><span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[9px] font-black text-[#4A2416]">100% VEG</span></div>
               <div className="flex flex-col justify-center p-5 sm:p-6">
                 <p className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[.16em]" style={{ color: 'var(--color-brand-accent)' }}><Icon className="h-3.5 w-3.5" /> {note}</p>
                 <h3 className="mt-2 text-xl font-black leading-tight" style={{ color: 'var(--color-text-primary)' }}>{item.name}</h3>
