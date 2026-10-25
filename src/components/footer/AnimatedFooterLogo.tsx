@@ -42,7 +42,7 @@ export const AnimatedFooterLogo: React.FC<AnimatedFooterLogoProps> = ({
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        className="footer-3d-vignette footer-3d-vignette--barista pointer-events-none absolute right-[-5%] top-[7%] z-[2] hidden w-[clamp(190px,19vw,345px)] lg:block"
+        className="footer-3d-vignette footer-3d-vignette--barista pointer-events-none absolute right-0 top-[1%] z-[2] block w-[160px] sm:w-[205px] lg:right-[-5%] lg:top-[7%] lg:w-[clamp(190px,19vw,345px)]"
         style={{ opacity: isDark ? 0.5 : 0.78 }}
       />
       <img
