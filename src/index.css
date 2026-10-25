@@ -439,6 +439,12 @@ body {
 .marquee-track--reverse { animation-direction: reverse !important; }
 .group:hover .marquee-track--pausable { animation-play-state: paused !important; }
 
+/* An intentionally invisible viewport for review cards: it constrains the
+   marquee to the content column, so cards feel like they travel through a
+   contained rail rather than across the entire page. */
+.review-marquee-window { width: calc(100% - 2rem); max-width: 1240px; margin-inline: auto; overflow: hidden; }
+@media (min-width: 640px) { .review-marquee-window { width: calc(100% - 3rem); } }
+
 /* ── Performance Optimizations (60 FPS Butter-Smooth Scrolling) ── */
 html {
   scroll-behavior: smooth;

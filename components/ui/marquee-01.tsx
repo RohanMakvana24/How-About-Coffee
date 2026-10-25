@@ -39,15 +39,17 @@ function ReviewCard({ name, meta, body, highlight }: Review) {
 
 export function MarqueeDemo() {
   return (
-    <div className="relative w-full overflow-hidden py-2">
-      <Marquee reverse pauseOnHover className="[--duration:34s]">
-        {firstRow.map((review) => <ReviewCard key={review.name} {...review} />)}
-      </Marquee>
-      <Marquee pauseOnHover className="[--duration:38s]">
-        {secondRow.map((review) => <ReviewCard key={review.name} {...review} />)}
-      </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r sm:w-24" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l sm:w-24" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
+    <div className="review-marquee-window">
+      <div className="relative w-full overflow-hidden py-2">
+        <Marquee reverse pauseOnHover repeat={2} className="[--duration:34s]">
+          {firstRow.map((review) => <ReviewCard key={review.name} {...review} />)}
+        </Marquee>
+        <Marquee pauseOnHover repeat={2} className="[--duration:38s]">
+          {secondRow.map((review) => <ReviewCard key={review.name} {...review} />)}
+        </Marquee>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r sm:w-16" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l sm:w-16" style={{ '--tw-gradient-from': 'var(--color-bg-page)' } as React.CSSProperties} />
+      </div>
     </div>
   );
 }
