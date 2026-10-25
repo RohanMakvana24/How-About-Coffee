@@ -51,7 +51,7 @@ export const AnimatedFooterLogo: React.FC<AnimatedFooterLogoProps> = ({
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        className="footer-3d-vignette footer-3d-vignette--coffee pointer-events-none absolute bottom-[7%] left-[-5%] z-[2] hidden w-[clamp(220px,23vw,410px)] lg:block"
+        className="footer-3d-vignette footer-3d-vignette--coffee pointer-events-none absolute bottom-[7%] left-[1%] z-[2] hidden w-[clamp(220px,23vw,410px)] lg:block"
         style={{ opacity: isDark ? 0.46 : 0.72 }}
       />
 
