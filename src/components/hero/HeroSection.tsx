@@ -17,33 +17,50 @@ export const HeroSection: React.FC = () => {
   useEffect(() => {
     let frame = 0;
     let latest = 0;
+    let applied = -1;
     let isVisible = true;
     let pageVisible = !document.hidden;
-    const render = () => {
-      frame = 0;
-      if (isVisible && pageVisible) stageRef.current?.style.setProperty('--pb-scroll', latest.toFixed(4));
-    };
-    const update = () => {
+    let start = 0;
+    let range = 1;
+
+    // Geometry is read only when the viewport/layout can change, never inside
+    // the scroll event. This avoids forced reflow during a swipe or trackpad run.
+    const measure = () => {
       const section = sectionRef.current;
       const stage = stageRef.current;
-      if (!section || !stage || !pageVisible) return;
-      const range = Math.max(1, section.offsetHeight - stage.offsetHeight);
-      latest = Math.max(0, Math.min(1, (window.scrollY - section.offsetTop) / range));
+      if (!section || !stage) return;
+      start = window.scrollY + section.getBoundingClientRect().top;
+      range = Math.max(1, section.offsetHeight - stage.offsetHeight);
+    };
+    const render = () => {
+      frame = 0;
+      if (!isVisible || !pageVisible || Math.abs(latest - applied) < 0.001) return;
+      applied = latest;
+      stageRef.current?.style.setProperty('--pb-scroll', latest.toFixed(3));
+    };
+    const queueUpdate = () => {
+      if (!pageVisible) return;
+      latest = Math.max(0, Math.min(1, (window.scrollY - start) / range));
       if (!frame) frame = requestAnimationFrame(render);
     };
     const observer = new IntersectionObserver(([entry]) => {
       isVisible = entry.isIntersecting;
       stageRef.current?.classList.toggle('pb-hero--active', isVisible);
-      if (isVisible) update();
+      if (isVisible) queueUpdate();
     }, { rootMargin: '120px 0px' });
     if (sectionRef.current) observer.observe(sectionRef.current);
-    update();
-    const onScroll = () => update();
+    measure();
+    queueUpdate();
+    const onScroll = () => queueUpdate();
+    const onResize = () => { measure(); queueUpdate(); };
+    const resizeObserver = new ResizeObserver(onResize);
+    if (sectionRef.current) resizeObserver.observe(sectionRef.current);
+    if (stageRef.current) resizeObserver.observe(stageRef.current);
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    const onVisibility = () => { pageVisible = !document.hidden; if (pageVisible) update(); };
+    window.addEventListener('resize', onResize, { passive: true });
+    const onVisibility = () => { pageVisible = !document.hidden; if (pageVisible) { measure(); queueUpdate(); } };
     document.addEventListener('visibilitychange', onVisibility);
-    return () => { observer.disconnect(); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); document.removeEventListener('visibilitychange', onVisibility); if (frame) cancelAnimationFrame(frame); };
+    return () => { observer.disconnect(); resizeObserver.disconnect(); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); document.removeEventListener('visibilitychange', onVisibility); if (frame) cancelAnimationFrame(frame); };
   }, []);
 
   const handleHeroImageReady = () => {
