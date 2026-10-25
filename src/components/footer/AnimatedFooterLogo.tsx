@@ -34,6 +34,27 @@ export const AnimatedFooterLogo: React.FC<AnimatedFooterLogoProps> = ({
         style={{ background: isDark ? 'rgba(198, 93, 46, .12)' : 'rgba(198, 93, 46, .08)' }}
       />
 
+      {/* Desktop-only 3D cafe vignettes fill the generous wordmark margins
+          without competing with the interactive lettering. */}
+      <img
+        src="/images/footer-barista-3d.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="footer-3d-vignette footer-3d-vignette--barista pointer-events-none absolute right-[-5%] top-[7%] z-[2] hidden w-[clamp(190px,19vw,345px)] lg:block"
+        style={{ opacity: isDark ? 0.5 : 0.78 }}
+      />
+      <img
+        src="/images/footer-coffee-still-life-3d.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="footer-3d-vignette footer-3d-vignette--coffee pointer-events-none absolute bottom-[7%] left-[-5%] z-[2] hidden w-[clamp(220px,23vw,410px)] lg:block"
+        style={{ opacity: isDark ? 0.46 : 0.72 }}
+      />
+
       <div className="relative z-10 flex w-full max-w-[1600px] flex-col items-center px-2 py-12 text-center sm:px-4 sm:py-16">
         <div className="w-full max-w-[1600px] space-y-[-2vw]" style={{ color: ink }}>
           {([

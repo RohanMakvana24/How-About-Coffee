@@ -480,6 +480,20 @@ footer {
   contain-intrinsic-size: auto 640px;
 }
 
+/* Generated cafe artwork is softly masked into an oval vignette, so the
+   footer's large wordmark stays the focus rather than reading as image cards. */
+.footer-3d-vignette {
+  height: auto;
+  mask-image: radial-gradient(ellipse 56% 64% at 50% 50%, #000 49%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 56% 64% at 50% 50%, #000 49%, transparent 76%);
+  filter: saturate(.92) drop-shadow(0 20px 24px rgba(55, 22, 9, .18));
+  transform: translate3d(0, 0, 0);
+  animation: footer-vignette-float 7s ease-in-out infinite alternate;
+}
+.footer-3d-vignette--coffee { animation-delay: -3.2s; }
+@keyframes footer-vignette-float { from { transform: translate3d(0, -7px, 0) rotate(-2deg); } to { transform: translate3d(0, 9px, 0) rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) { .footer-3d-vignette { animation: none; } }
+
 /* How About Coffee — Phase 1 brand palette */
 :root {
   --color-brand-primary: #4A2416;
