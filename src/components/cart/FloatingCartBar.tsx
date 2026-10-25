@@ -60,7 +60,7 @@ export const FloatingCartBar: React.FC = () => {
           <span className="text-sm sm:text-base font-black text-amber-500">₹{subtotal}</span>
 
           <div
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs text-white shadow-sm transition-all group-hover:bg-amber-400 group-hover:text-black"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs text-white shadow-sm transition-all group-hover:opacity-90"
             style={{
               backgroundColor: 'var(--color-brand-primary)',
             }}

@@ -24,8 +24,6 @@ import {
   Info,
 } from 'lucide-react';
 
-const PAIRING_PRIORITY = ['hazelnut-cappuccino', 'peri-peri-fries', 'brownie-ice-cream', 'cafe-latte'];
-
 export const CartDrawer: React.FC = () => {
   const {
     items,
@@ -52,10 +50,9 @@ export const CartDrawer: React.FC = () => {
   const isDark = theme === 'dark';
   const [copied, setCopied] = useState(false);
   const [leavingIds, setLeavingIds] = useState<string[]>([]);
-  const pairings = useMemo(() => {
-    const preferred = PAIRING_PRIORITY.map((id) => MENU_ITEMS.find((item) => item.id === id)).filter(Boolean);
-    const available = preferred.filter((item) => !items.some((cartItem) => cartItem.id === item!.id));
-    return (available.length >= 3 ? available : preferred).slice(0, 3);
+  const menuSuggestions = useMemo(() => {
+    const inCart = new Set(items.map((item) => item.id));
+    return MENU_ITEMS.filter((item) => !inCart.has(item.id));
   }, [items]);
 
   const removeWithAnimation = (id: string) => {
@@ -425,23 +422,23 @@ export const CartDrawer: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 5. Quick Add Popular Addons */}
+                {/* 5. Dynamic menu suggestions: items leave this rail when added and return when removed. */}
                 <div className="pt-2">
                   <div className="flex items-center gap-1.5 mb-2.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     <span className="text-xs font-mono uppercase tracking-wider font-bold opacity-80">
-                      Popular Coffee Pairings
+                      Menu Suggestions
                     </span>
+                    <span className="ml-auto text-[10px] font-medium opacity-50">{menuSuggestions.length} to explore</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2">
-                    {pairings.map((addon) => {
-                      if (!addon) return null;
+                  <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:thin]">
+                    {menuSuggestions.map((addon) => {
                       const price = Number((addon.price ?? '').replace(/\D/g, '')) || 0;
                       return (
                         <div
                           key={addon.id}
-                          className="p-2.5 rounded-xl border flex flex-col justify-between text-left transition-all hover:border-amber-500/50"
+                          className="w-[118px] shrink-0 p-2.5 rounded-xl border flex flex-col justify-between text-left transition-all hover:border-amber-500/50"
                           style={{
                             backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : '#FFFFFF',
                             borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
@@ -487,6 +484,7 @@ export const CartDrawer: React.FC = () => {
                         </div>
                       );
                     })}
+                    {menuSuggestions.length === 0 && <p className="py-4 text-center text-xs opacity-60">Everything from the menu is already in your cart.</p>}
                   </div>
                 </div>
               </>
